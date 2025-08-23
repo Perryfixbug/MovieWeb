@@ -1,0 +1,20 @@
+interface MovieType {
+    "id": number,
+    "slug": string,
+    "name": string,
+    "description": string,
+    "userRate": number,
+    "imdbRate": number,
+    "rottenRate": number,
+    "length": number,
+    "publishYear": number,
+    "type": string,
+    "category": string,
+    "status": string,
+    "link_video": string,
+    "link_sub": string,
+    "thumbnail": string,
+    "poster": string,
+    "user_id": number,
+    "createAt": Date
+}

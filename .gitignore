@@ -30,6 +30,7 @@ pip-log.txt
 coverage/
 dist/
 build/
+api/
 
 # === Common IDE & OS files ===
 .vscode/
