@@ -3,8 +3,4 @@ from routes import movie
 
 app = FastAPI()
 
-@app.get('/')
-def init():
-  return "Hello world!"
-
-app.include_router(movie.router)
+app.include_router(movie.router, prefix='/api/v1')

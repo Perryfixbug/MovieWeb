@@ -1,5 +1,6 @@
 from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
+from datetime import datetime
 
 class UserBase(SQLModel):
   fullname: str
@@ -9,6 +10,7 @@ class UserBase(SQLModel):
   avatar: Optional[str] = None
   role: str = "user"
   level: Optional[str] = None
+  createAt: datetime
   
 
 

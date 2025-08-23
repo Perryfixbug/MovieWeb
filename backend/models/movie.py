@@ -1,6 +1,7 @@
 from schemas.movie import MovieBase
 from sqlmodel import Field, Relationship
 from typing import List
+from datetime import datetime
 
 from models.userListMovie import UserListMovie
 from models.userLikedMovie import UserLikedMovie
@@ -8,6 +9,8 @@ from models.acting import Acting
 
 class Movie(MovieBase, table=True):
   id: int = Field(primary_key=True)
+  slug: str = Field(index=True, unique=True)
+  createAt: datetime = Field(default_factory=datetime.now)
   actors: List["Actor"] = Relationship(back_populates="actedMovies", link_model=Acting)
   uploader: "User" = Relationship(back_populates="uploaded_movies")
   comments: List["Comment"] = Relationship(back_populates="movie")
