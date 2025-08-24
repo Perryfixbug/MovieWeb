@@ -1,7 +1,11 @@
-from sqlmodel import SQLModel, Field 
+from sqlmodel import SQLModel, Field, Relationship 
 from typing import Optional
+from datetime import datetime
+from schemas.carousel import CarouselBase
 
-class Carousel(SQLModel, table=True):
-  id: Optional[int] = Field(default=None, primary_key=True)
-  movie_id: int = Field(foreign_key="movie.id")
-  order: int
+class Carousel(CarouselBase, table=True):
+  id: Optional[int] = Field(default=None, primary_key=True) 
+  createAt: datetime = Field(default_factory=datetime.now)
+  movie: Optional["Movie"] = Relationship()
+
+from models.movie import Movie

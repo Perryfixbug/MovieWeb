@@ -1,14 +1,27 @@
-import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import React from "react";
+"use client";
+import { fetchAPI } from "@/lib/api";
+import { cn } from "@/lib/utils";
+import React, { useEffect, useState } from "react";
 
 const Hero = () => {
+  const [carousels, setCarousels] = useState<[]>([]);
+  const [heroMovie, setHeroMovie] = useState<MovieType>();
+  useEffect(() => {
+    async function fetchCarousels() {
+      const data = await fetchAPI("/carousel");
+      console.log(data);
+      setCarousels(data);
+      setHeroMovie(data[0].movie);
+    }
+    fetchCarousels();
+  }, []);
+
   return (
     <div className="relative">
       {/* Hero image */}
       <div className="relative h-[90vh] w-full overflow-hidden">
         <img
-          src="https://images4.alphacoders.com/138/1385995.jpg"
+          src={heroMovie?.thumbnail}
           alt="Hero"
           className="w-full h-full object-cover object-top"
         />
@@ -22,16 +35,25 @@ const Hero = () => {
       </div>
 
       {/* Description */}
-      <div className="description">
-
-      </div>
+      <div className="description"></div>
 
       {/* Carousel */}
       <div className="carousel absolute bottom-20 right-0 flex justify-between px-5 mt-5 gap-2">
-        {Array.from({ length: 5 }).map((_: any, index: number) => (
-          <Card key={index} className="aspect-[4/3] min-w-12">
-            <CardContent className="flex items-center justify-center"></CardContent>
-          </Card>
+        {carousels.map((carousel: any) => (
+          <div
+            key={carousel.id}
+            className={cn("w-24 aspect-[4/3]")}
+            onClick={() => setHeroMovie(carousel.movie)}
+          >
+            <img
+              src={carousel.movie.thumbnail}
+              className={cn(
+                "rounded-md object-cover",
+                heroMovie?.id == carousel.movie.id &&
+                  "border-2 border-foreground"
+              )}
+            />
+          </div>
         ))}
       </div>
     </div>
