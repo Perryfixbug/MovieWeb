@@ -1,7 +1,12 @@
+import CommentSection from "@/components/comment-section"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs"
+import VersionEpisodeSection from "@/components/version-episode-section"
 import { fetchAPI } from "@/lib/api"
 import { dict } from "@/lib/dictionnary"
-import { toTitleCase } from "@/lib/utils"
+import { toTitleCase } from "@/lib/toCustomCase"
+import { BookMarkedIcon, MessageSquareTextIcon, Play, ShareIcon, ThumbsUpIcon } from "lucide-react"
 
 const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
   const {slug} = await params  
@@ -76,8 +81,50 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
       </div>
 
       {/* Right side */}
-      <div className="col-span-8 bg-blue-600 h-full z-10 mt-20">
+      <div className="col-span-8 h-full z-10 mt-20">
+        {/* Button */}
+        <div className="function-button-section grid grid-cols-8 items-center">
+          <Button className="rounded-full col-start-1 w-40" >
+            <Play />
+            Xem ngay
+          </Button>
+          <ul className="flex justify-around col-start-3 col-span-2">
+            <li><ThumbsUpIcon /></li>
+            <li><MessageSquareTextIcon /></li>
+            <li><BookMarkedIcon /></li>
+            <li><ShareIcon /></li>
+          </ul>
+          <div className="fact col-start-6 col-span-3 text-muted-foreground">
+            <span className="font-bold text-foreground">Fact: </span>
+            Ngô Trung là người lãnh đạo cuộc khởi nghĩa vào 120 An Liễng, từ đó mới có phim này.
+          </div>
+        </div>
 
+        {/* Movie interact */}
+        <div className="">
+          <Tabs defaultValue="episode">
+            <TabsList className="bg-transparent">
+              <TabsTrigger value="episode">Tập phim</TabsTrigger>
+              <TabsTrigger value="actor">Diễn viên</TabsTrigger>
+              <TabsTrigger value="suggest">Đề xuất</TabsTrigger>
+            </TabsList>
+            <TabsContent value="episode">
+              <VersionEpisodeSection />
+            </TabsContent>
+
+            <TabsContent value="actor">
+              Diễn viên
+            </TabsContent>
+            <TabsContent value="suggest">
+              Quạc gợi ý
+            </TabsContent>
+          </Tabs>
+        </div>
+
+        {/* Comment section */}
+        <div className="w-[80%]">
+            <CommentSection />
+        </div>
       </div>
     </div>
   )

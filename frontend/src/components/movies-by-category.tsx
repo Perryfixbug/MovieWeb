@@ -1,7 +1,7 @@
 import Movie from "@/components/movie";
 import { fetchAPI } from "@/lib/api";
 import { dict } from "@/lib/dictionnary";
-import { toTitleCase } from "@/lib/utils";
+import { toTitleCase } from "@/lib/toCustomCase";
 import React from "react";
 
 const MoviesByCategory = async ({
