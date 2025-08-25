@@ -1,8 +1,10 @@
 import React from 'react'
 
-const Category = () => {
+const Category = async ({params}:{params: Promise<{slug: string}>}) => {
+  const {slug} = await params
+
   return (
-    <div>Category</div>
+    <div>{slug}</div>
   )
 }
 

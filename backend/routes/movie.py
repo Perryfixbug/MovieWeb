@@ -15,7 +15,7 @@ router = APIRouter(
 async def get_all_movies(
   session: Session = Depends(get_session)
 )->Dict[str, List[MovieRead]]:
-  category = ["sci-fi", "drama", "action", "adventure"]
+  category = ["sci-fi", "drama", "action", "adventure", "superhero"]
   response = {}
   for item in category:
     statement = select(Movie).where(Movie.category == item).limit(5)

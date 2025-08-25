@@ -10,7 +10,7 @@ const CommentSection = () => {
     <div className='flex flex-col gap-2'>
       {/* Title */}
       <div className='title flex gap-2 items-center'>
-        <MessageSquareTextIcon />
+        <MessageSquareTextIcon className="icon" />
         <span className='font-medium'>Bình luận</span>
       </div> 
 

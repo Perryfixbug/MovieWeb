@@ -56,7 +56,7 @@
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
+  --muted-foreground: oklch(69.926% 0.00008 271.152);
   --accent: #fec86b;
   --accent-foreground: #FFFFFF;
   --destructive: oklch(0.577 0.245 27.325);
@@ -119,4 +119,8 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.icon{
+  @apply w-5 h-5
 }

@@ -6,7 +6,8 @@ import VersionEpisodeSection from "@/components/version-episode-section"
 import { fetchAPI } from "@/lib/api"
 import { dict } from "@/lib/dictionnary"
 import { toTitleCase } from "@/lib/toCustomCase"
-import { BookMarkedIcon, MessageSquareTextIcon, Play, ShareIcon, ThumbsUpIcon } from "lucide-react"
+import { BookMarkedIcon, MessageSquareTextIcon, Play, PlayIcon, ShareIcon, ThumbsUpIcon } from "lucide-react"
+import Link from "next/link"
 
 const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
   const {slug} = await params  
@@ -22,7 +23,7 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, rgba(44, 44, 44, 0.3) 0%, rgba(44, 44, 44, 0.5) 70%, rgba(44, 44, 44, 1) 100%)",
+              "linear-gradient(to bottom, rgba(44, 44, 44, 0.7) 0%, rgba(44, 44, 44, 0.5) 50%, rgba(44, 44, 44, 1) 100%)",
           }}
       />
       {/* Left side */}
@@ -32,7 +33,7 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
           <div className="col-span-3 flex flex-col justify-between">
             <span className="text-lg font-medium">{movie_data.name}</span>
             <ul className="flex flex-wrap gap-2">
-              <li><Badge variant={"outline"} className="text-amber-300 border-amber-300">Imdb {movie_data.imdbRate}</Badge></li>
+              <li><Badge variant={"outline"} className="text-accent border-accent">Imdb {movie_data.imdbRate}</Badge></li>
               <li><Badge variant={"outline"}>{movie_data.length}ph</Badge></li>
               <li><Badge variant={"outline"}>{movie_data.publishYear}</Badge></li>
               <li><Badge >{movie_data.status}</Badge></li>
@@ -84,15 +85,15 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
       <div className="col-span-8 h-full z-10 mt-20">
         {/* Button */}
         <div className="function-button-section grid grid-cols-8 items-center">
-          <Button className="rounded-full col-start-1 w-40" >
-            <Play />
-            Xem ngay
-          </Button>
+          <Link href={`/watch-movie/${movie_data.slug}`} className="flex items-center justify-center gap-2 bg-accent rounded-full col-start-1 w-40 h-10" >
+            <PlayIcon fill="var(--foreground)" size={16}/>
+            <span className="font-medium text-lg">Xem ngay</span>
+          </Link>
           <ul className="flex justify-around col-start-3 col-span-2">
-            <li><ThumbsUpIcon /></li>
-            <li><MessageSquareTextIcon /></li>
-            <li><BookMarkedIcon /></li>
-            <li><ShareIcon /></li>
+            <li><ThumbsUpIcon className="icon" /></li>
+            <li><MessageSquareTextIcon className="icon" /></li>
+            <li><BookMarkedIcon className="icon" /></li>
+            <li><ShareIcon className="icon" /></li>
           </ul>
           <div className="fact col-start-6 col-span-3 text-muted-foreground">
             <span className="font-bold text-foreground">Fact: </span>
