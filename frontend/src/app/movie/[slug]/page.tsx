@@ -37,7 +37,9 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
               <li><Badge variant={"outline"}>{movie_data.length}ph</Badge></li>
               <li><Badge variant={"outline"}>{movie_data.publishYear}</Badge></li>
               <li><Badge >{movie_data.status}</Badge></li>
-              <li><Badge >{toTitleCase(dict[movie_data.category])}</Badge></li>
+              <li>{movie_data?.categories?.map((value)=>(
+                <Badge key={value}>{value}</Badge>
+              ))}</li>
             </ul>
           </div>
         </div>
@@ -54,23 +56,23 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
           </li>
           <li className="flex gap-1">
             <span>Đạo diễn:</span>
-            <p className="text-muted-foreground">{}</p>
+            <p className="text-muted-foreground">{movie_data.director}</p>
           </li>
           <li className="flex gap-1">
             <span>Sản xuất:</span>
-            <p className="text-muted-foreground">{}</p>
+            <p className="text-muted-foreground">{movie_data.production}</p>
           </li>
           <li className="flex gap-1">
             <span>Năm phát hành:</span>
-            <p className="text-muted-foreground">{}</p>
+            <p className="text-muted-foreground">{movie_data.publishYear}</p>
           </li>
           <li className="flex gap-1">
             <span>Quốc gia:</span>
-            <p className="text-muted-foreground">{}</p>
+            <p className="text-muted-foreground">{movie_data.country}</p>
           </li>
           <li className="flex gap-1">
             <span>Nhãn:</span>
-            <p className="text-muted-foreground">{}</p>
+            <p className="text-muted-foreground">{movie_data.label}</p>
           </li>
         </ul>
         {/* Đề xuất */}

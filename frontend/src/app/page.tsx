@@ -5,18 +5,18 @@ import Movie from "@/components/movie";
 import { fetchAPI } from "@/lib/api";
 
 export default async function Home() {
-  const list = await fetchAPI("/movie");
+  const list = await fetchAPI("/category/movie") as CategoryType[];
 
   return (
       <main className="flex flex-col w-full h-full gap-2">
         <Hero />
         <CategorySection />
         <div className="px-5">
-          {Object.entries(list).map(([category, movies]) => (
+          {list.map((category) => (
               <MoviesByCategory
-                key={category}
-                category={category}
-                movies={movies as MovieType[]}
+                key={category.id}
+                category={category.value}
+                movies={category.movies as MovieType[]}
               />
           ))}
         </div>

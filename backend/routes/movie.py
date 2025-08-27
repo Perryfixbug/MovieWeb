@@ -1,8 +1,11 @@
 from fastapi import APIRouter, Depends, HTTPException
 from dependencies import get_session
-from sqlmodel import Session, select
+from sqlmodel import Session, select, func
+from sqlalchemy.orm import selectinload
 from models.movie import Movie
 from schemas.movie import MovieRead, MovieCreate, MovieUpdate
+from models.category import Category
+from models.categorymovie import CategoryMovie
 from typing import List, Dict
 from slugify import slugify
 
@@ -11,18 +14,12 @@ router = APIRouter(
   tags=["Movie"]
 )
 
-@router.get('/')
+@router.get('/all')
 async def get_all_movies(
   session: Session = Depends(get_session)
-)->Dict[str, List[MovieRead]]:
-  category = ["sci-fi", "drama", "action", "adventure", "superhero"]
-  response = {}
-  for item in category:
-    statement = select(Movie).where(Movie.category == item).limit(5)
-    movies = session.exec(statement).all()
-    response[item] = movies 
-
-  return response
+)->List[MovieRead]:
+  movies = session.exec(select(Movie)).all()  
+  return movies
 
 @router.get('/{slug}')
 async def get_movie(
@@ -37,11 +34,40 @@ async def create_movie(
   movie_data: MovieCreate,
   session: Session = Depends(get_session)
 )->MovieRead:
+  
+  #Tao movie
   slug = slugify(movie_data.name)
-  movie = Movie(**movie_data.model_dump(), slug=slug)
+  movie_dict = movie_data.model_dump(exclude={"categories"})
+  movie = Movie(**movie_dict, slug=slug)
   session.add(movie)
   session.commit()
   session.refresh(movie)
+
+  #Lấy các category đang có
+  exist_categories = {c.value: c for c in session.exec(select(Category)).all()}
+  
+  # Lấy order lớn nhất
+  max_order = session.exec(select(func.max(Category.order))).one_or_none()
+  max_order = max_order if max_order is not None else 0
+  
+  for c in movie_data.categories:
+    if c in exist_categories:
+      category = exist_categories[c]
+    else:
+      max_order += 1
+      category = Category(value=c, order=max_order)
+      session.add(category)
+      session.commit()
+      session.refresh(category)
+      exist_categories[c] = category
+    
+    #Quan he Category - Movie
+    cm = CategoryMovie(movieId=movie.id, categoryId=category.id)
+    session.add(cm)
+      
+  session.commit()
+  session.refresh(movie)
+      
   return movie
 
 @router.put('/{movie_id}')

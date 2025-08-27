@@ -14,7 +14,7 @@ const MoviesByCategory = async ({
   if (movies.length == 0) return
   return (
     <div>
-      <span className="text-lg">{toTitleCase(dict[category])}</span>
+      <span className="text-lg">{toTitleCase(dict[category] ?? category)}</span>
       <div className="flex gap-2 overflow-auto">
         {movies.map((movie: MovieType) => (
           <Movie key={movie.id} movie_data={movie} />

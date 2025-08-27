@@ -1,8 +1,8 @@
 """initial
 
-Revision ID: 870a1ff9bd36
+Revision ID: eb67b31b4a5e
 Revises: 
-Create Date: 2025-08-19 22:36:51.191253
+Create Date: 2025-08-26 23:42:33.819669
 
 """
 from typing import Sequence, Union
@@ -13,7 +13,7 @@ import sqlmodel
 
 
 # revision identifiers, used by Alembic.
-revision: str = '870a1ff9bd36'
+revision: str = 'eb67b31b4a5e'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -30,6 +30,13 @@ def upgrade() -> None:
     sa.Column('id', sa.Integer(), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('category',
+    sa.Column('value', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('isActive', sa.Boolean(), nullable=False),
+    sa.Column('order', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('user',
     sa.Column('fullname', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('username', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
@@ -37,8 +44,28 @@ def upgrade() -> None:
     sa.Column('password', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('avatar', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('role', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('level', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('level', sa.Integer(), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('createAt', sa.DateTime(), nullable=False),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('comment',
+    sa.Column('content', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('targetId', sa.Integer(), nullable=False),
+    sa.Column('targetType', sa.Enum('MOVIE', 'COMMENT', name='commenttargettype'), nullable=False),
+    sa.Column('userId', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('createAt', sa.DateTime(), nullable=False),
+    sa.ForeignKeyConstraint(['userId'], ['user.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('like',
+    sa.Column('targetId', sa.Integer(), nullable=False),
+    sa.Column('targetType', sa.Enum('MOVIE', 'COMMENT', name='liketargettype'), nullable=False),
+    sa.Column('userId', sa.Integer(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('createAt', sa.DateTime(), nullable=False),
+    sa.ForeignKeyConstraint(['userId'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('movie',
@@ -49,17 +76,24 @@ def upgrade() -> None:
     sa.Column('rottenRate', sa.Float(), nullable=True),
     sa.Column('length', sa.Float(), nullable=False),
     sa.Column('publishYear', sa.Integer(), nullable=False),
+    sa.Column('director', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('production', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('country', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('type', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('category', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('label', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('status', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('link_video', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('link_sub', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
-    sa.Column('thumbnail', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('user_id', sa.Integer(), nullable=False),
+    sa.Column('linkVideo', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('linkSub', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('poster', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('thumbnail', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
+    sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
+    sa.Column('slug', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
+    sa.Column('createAt', sa.DateTime(), nullable=False),
+    sa.ForeignKeyConstraint(['userId'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_movie_slug'), 'movie', ['slug'], unique=True)
     op.create_table('payment',
     sa.Column('paymentMethod', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
     sa.Column('amount', sa.Integer(), nullable=False),
@@ -77,38 +111,30 @@ def upgrade() -> None:
     sa.PrimaryKeyConstraint('actorId', 'movieId')
     )
     op.create_table('carousel',
-    sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('movie_id', sa.Integer(), nullable=False),
-    sa.Column('order', sa.Integer(), nullable=False),
+    sa.Column('is_active', sa.Boolean(), nullable=False),
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('createAt', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['movie_id'], ['movie.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('comment',
-    sa.Column('content', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
-    sa.Column('createAt', sa.DateTime(), nullable=False),
+    op.create_table('categorymovie',
     sa.Column('movieId', sa.Integer(), nullable=False),
-    sa.Column('userId', sa.Integer(), nullable=False),
-    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('categoryId', sa.Integer(), nullable=False),
+    sa.ForeignKeyConstraint(['categoryId'], ['category.id'], ),
     sa.ForeignKeyConstraint(['movieId'], ['movie.id'], ),
-    sa.ForeignKeyConstraint(['userId'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('movieId', 'categoryId')
     )
     op.create_table('review',
     sa.Column('rate', sa.Float(), nullable=False),
-    sa.Column('createAt', sa.DateTime(), nullable=False),
+    sa.Column('content', sqlmodel.sql.sqltypes.AutoString(), nullable=True),
     sa.Column('movieId', sa.Integer(), nullable=False),
     sa.Column('userId', sa.Integer(), nullable=False),
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('createAt', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['movieId'], ['movie.id'], ),
     sa.ForeignKeyConstraint(['userId'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id')
-    )
-    op.create_table('userlikedmovie',
-    sa.Column('userId', sa.Integer(), nullable=False),
-    sa.Column('movieId', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['movieId'], ['movie.id'], ),
-    sa.ForeignKeyConstraint(['userId'], ['user.id'], ),
-    sa.PrimaryKeyConstraint('userId', 'movieId')
     )
     op.create_table('userlistmovie',
     sa.Column('userId', sa.Integer(), nullable=False),
@@ -124,13 +150,16 @@ def downgrade() -> None:
     """Downgrade schema."""
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('userlistmovie')
-    op.drop_table('userlikedmovie')
     op.drop_table('review')
-    op.drop_table('comment')
+    op.drop_table('categorymovie')
     op.drop_table('carousel')
     op.drop_table('acting')
     op.drop_table('payment')
+    op.drop_index(op.f('ix_movie_slug'), table_name='movie')
     op.drop_table('movie')
+    op.drop_table('like')
+    op.drop_table('comment')
     op.drop_table('user')
+    op.drop_table('category')
     op.drop_table('actor')
     # ### end Alembic commands ###

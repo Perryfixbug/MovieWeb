@@ -4,6 +4,7 @@ import { dict } from '@/lib/dictionnary';
 import { toTitleCase } from '@/lib/toCustomCase';
 import { cn } from '@/lib/utils';
 import { PlayIcon } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
@@ -39,7 +40,9 @@ const HeroClient = ({carousels}: {carousels: any}) => {
           <li><Badge variant={"outline"}>{heroMovie?.length}ph</Badge></li>
           <li><Badge variant={"outline"}>{heroMovie?.publishYear}</Badge></li>
           <li><Badge >{heroMovie?.status}</Badge></li>
-          <li><Badge >{toTitleCase(dict[heroMovie.category] ?? heroMovie.category)}</Badge></li>
+          <li className='flex gap-2'>{heroMovie?.categories?.map((value)=>(
+            <Badge key={value}>{toTitleCase(dict[value] ?? value)}</Badge>
+          ))}</li>
         </ul>
         <p>{heroMovie?.description}</p>
       </div>
@@ -49,16 +52,18 @@ const HeroClient = ({carousels}: {carousels: any}) => {
         {carousels.map((carousel: any) => (
           <div
             key={carousel.id}
-            className={cn("w-24 aspect-[4/3]")}
+            className="w-30 aspect-video relative"
             onClick={() => setHeroMovie(carousel.movie)}
           >
-            <img
+            <Image
               src={carousel.movie.thumbnail}
+              alt={carousel.movie.name}
               className={cn(
                 "rounded-md object-cover",
                 heroMovie?.id == carousel.movie.id &&
                   "border-2 border-foreground"
               )}
+              fill
             />
           </div>
         ))}

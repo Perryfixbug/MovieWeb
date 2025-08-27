@@ -9,7 +9,7 @@ class UserBase(SQLModel):
   password: str
   avatar: Optional[str] = None
   role: str = "user"
-  level: Optional[str] = None
+  level: int = Field(default=0)
   createAt: datetime
   
 

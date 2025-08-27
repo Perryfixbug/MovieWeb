@@ -26,7 +26,9 @@ from models.review import Review
 from models.actor import Actor
 from models.payment import Payment
 from models.acting import Acting
-from models.userLikedMovie import UserLikedMovie
+from models.like import Like
+from models.category import Category
+from models.categorymovie import CategoryMovie
 from models.userListMovie import UserListMovie
 from models.carousel import Carousel
 

@@ -3,9 +3,9 @@ import { Badge } from '@/components/ui/badge'
 import { fetchAPI } from '@/lib/api'
 import { dict } from '@/lib/dictionnary'
 import { toTitleCase } from '@/lib/toCustomCase'
-import { BookMarkedIcon, ChevronLeft, ChevronLeftIcon, MessageSquareTextIcon, ShareIcon, ThumbsUpIcon } from 'lucide-react'
+import { BookMarkedIcon, ChevronLeftIcon, MessageSquareTextIcon, ShareIcon, ThumbsUpIcon } from 'lucide-react'
 import Link from 'next/link'
-import React from 'react'
+import ReactPlayer from 'react-player'
 
 const WatchMovie = async ({params}: {params: Promise<{slug: string}>}) => {
   const {slug} = await params
@@ -17,9 +17,17 @@ const WatchMovie = async ({params}: {params: Promise<{slug: string}>}) => {
         <ChevronLeftIcon size={16} />
         {movie_data.name}
       </Link>
-      <div className='watch-section w-8/12 m-auto aspect-video bg-amber-300'>
-        <video src={movie_data.link_video}/>
+      <div className='watch-section w-8/12 m-auto aspect-video'>
+        <ReactPlayer 
+          src={movie_data.linkVideo}
+          controls
+          className="aspect-video rounded-sm"
+          width={"100%"}
+          height={"100%"}
+          playIcon
+        />
       </div>
+
       <div className='other grid grid-cols-12 gap-5'>
         {/* Left side */}
         <div className="left col-span-8 grid grid-cols-8 gap-5 w-full justify-between">
@@ -31,7 +39,9 @@ const WatchMovie = async ({params}: {params: Promise<{slug: string}>}) => {
               <li><Badge variant={"outline"}>{movie_data.length}ph</Badge></li>
               <li><Badge variant={"outline"}>{movie_data.publishYear}</Badge></li>
               <li><Badge >{movie_data.status}</Badge></li>
-              <li><Badge >{toTitleCase(dict[movie_data.category])}</Badge></li>
+              <li className='flex gap-2'>{movie_data?.categories?.map((value)=>(
+                  <Badge key={value}>{toTitleCase(dict[value] ?? value)}</Badge>
+              ))}</li>
             </ul>
           </div>
           <p className='col-span-8'>{movie_data.description}</p>
@@ -48,8 +58,9 @@ const WatchMovie = async ({params}: {params: Promise<{slug: string}>}) => {
             <li><ShareIcon className="icon" /></li>
           </ul>
           <div className='col-span-4'>
-            <p><span>Đạo diễn: </span>{}</p>
-            <p><span>Diễn viên: </span>{}</p>
+            <p className='flex gap-1 text-muted-foreground'> <span className='text-muted'>Đạo diễn:</span>{movie_data.director}</p>
+            <p className='flex gap-1 text-muted-foreground'> <span className='text-muted'>Diễn viên:</span>{movie_data.actor}</p>
+            
           </div>
           <div className='col-span-4'>
             <span className='text-xl'>Đề xuất cho bạn</span>

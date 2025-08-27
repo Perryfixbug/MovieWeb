@@ -8,13 +8,28 @@ interface MovieType {
     "rottenRate": number,
     "length": number,
     "publishYear": number,
+    "director": string,
+    "production": string,
+    "country": string,
+    "label": string,
+    "fact": string,
     "type": string,
-    "category": string,
+    "categories": [string],
     "status": string,
-    "link_video": string,
-    "link_sub": string,
+    "actor": string,
+    "linkTrailer": string,
+    "linkVideo": string,
+    "linkSub": string,
     "thumbnail": string,
     "poster": string,
-    "user_id": number,
+    "userId": number,
     "createAt": Date
+}
+
+interface CategoryType{
+    "id": number,
+    "value": string,
+    "order": number,
+    "isDisplay": boolean,
+    "movies": MovieType[]
 }

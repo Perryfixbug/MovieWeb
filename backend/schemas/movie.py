@@ -1,6 +1,13 @@
 from sqlmodel import SQLModel, Field
+from pydantic import field_validator
 from typing import Optional
 from datetime import datetime
+from enum import Enum
+from typing import List
+
+class MovieType(str, Enum):
+  MOVIE = "movie"
+  SERIE = "serie" 
 
 class MovieBase(SQLModel):
   name: str
@@ -10,22 +17,34 @@ class MovieBase(SQLModel):
   rottenRate: Optional[float] = None
   length: float 
   publishYear: int
+  director: str
+  production: str
+  country: str
   type: str
-  category: Optional[str] = None
+  label: Optional[str] = None
   status: str
-  link_video: str
-  link_sub: Optional[str] = None
+  fact: Optional[str] = None
+  linkVideo: Optional[str] = None
+  linkSub: Optional[str] = None
   poster: Optional[str] = None
   thumbnail: Optional[str] = None
-  user_id: int = Field(foreign_key="user.id")
+  userId: int = Field(foreign_key="user.id")
 
 class MovieRead(MovieBase):
   id: int
   slug: str
+  categories: List[str] 
   createAt: datetime
 
+  @field_validator("categories", mode="before")
+  @classmethod
+  def to_list_category(cls, v): 
+    if v and hasattr(v[0], "value"):
+      return [c.value for c in v]
+    return v
+
 class MovieCreate(MovieBase):
-  pass
+  categories: List[str]
 
 class MovieUpdate(MovieBase):
   pass
