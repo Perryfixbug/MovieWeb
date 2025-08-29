@@ -20,7 +20,7 @@ def get_categories(
   return categories
 
 @router.get('/movie')
-def get_movie_by_category(
+def get_all_movie_by_display_category(
   session: Session = Depends(get_session)
 )->List[CategoryHasMovie]:
   display_categories = session.exec(
@@ -30,6 +30,15 @@ def get_movie_by_category(
     .options(selectinload(Category.movies))
   ).all()    
   return display_categories
+
+@router.get('/{slug}')
+def get_movie_by_category(
+  slug: str,
+  session: Session = Depends(get_session)
+)->List[MovieRead]:
+  category = session.exec(select(Category).where(Category.value == slug)).first()
+  movies = category.movies
+  return movies
 
 @router.post('/')
 def create_category(

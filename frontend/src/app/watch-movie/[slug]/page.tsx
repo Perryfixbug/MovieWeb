@@ -58,8 +58,8 @@ const WatchMovie = async ({params}: {params: Promise<{slug: string}>}) => {
             <li><ShareIcon className="icon" /></li>
           </ul>
           <div className='col-span-4'>
-            <p className='flex gap-1 text-muted-foreground'> <span className='text-muted'>Đạo diễn:</span>{movie_data.director}</p>
-            <p className='flex gap-1 text-muted-foreground'> <span className='text-muted'>Diễn viên:</span>{movie_data.actor}</p>
+            <p className='flex gap-1 text-muted'> <span className='text-muted-foreground'>Đạo diễn:</span>{movie_data.director}</p>
+            <p className='flex gap-1 text-muted'> <span className='text-muted-foreground'>Diễn viên:</span>{movie_data.actor}</p>
             
           </div>
           <div className='col-span-4'>

@@ -1,45 +1,78 @@
-import CommentSection from "@/components/comment-section"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs"
-import VersionEpisodeSection from "@/components/version-episode-section"
-import { fetchAPI } from "@/lib/api"
-import { dict } from "@/lib/dictionnary"
-import { toTitleCase } from "@/lib/toCustomCase"
-import { BookMarkedIcon, MessageSquareTextIcon, Play, PlayIcon, ShareIcon, ThumbsUpIcon } from "lucide-react"
-import Link from "next/link"
+import CommentSection from "@/components/comment-section";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs";
+import VersionEpisodeSection from "@/components/version-episode-section";
+import { fetchAPI } from "@/lib/api";
+import { dict } from "@/lib/dictionnary";
+import { toTitleCase } from "@/lib/toCustomCase";
+import {
+  BookMarkedIcon,
+  MessageSquareTextIcon,
+  Play,
+  PlayIcon,
+  ShareIcon,
+  ThumbsUpIcon,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
-const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
-  const {slug} = await params  
-  const movie_data = await fetchAPI(`/movie/${slug}`) as MovieType
+const MovieDescribe = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
+  const { slug } = await params;
+  const movie_data = (await fetchAPI(`/movie/${slug}`)) as MovieType;
 
   return (
     <div className="relative h-[90vh] w-full overflow-hidden grid grid-cols-12 gap-5 px-5">
-      <img 
+      <Image
         src={movie_data.thumbnail}
+        alt={movie_data.name}
         className="absolute w-full h-full object-cover object-top"
+        fill
       />
       <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "linear-gradient(to bottom, rgba(44, 44, 44, 0.7) 0%, rgba(44, 44, 44, 0.5) 50%, rgba(44, 44, 44, 1) 100%)",
-          }}
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(to bottom, rgba(44, 44, 44, 0.7) 0%, rgba(44, 44, 44, 0.5) 50%, rgba(44, 44, 44, 1) 100%)",
+        }}
       />
       {/* Left side */}
       <div className="col-span-4 h-full z-10 mt-20 flex flex-col gap-6">
         <div className="hero grid grid-cols-4 gap-5 w-full justify-between">
-          <img src={movie_data.poster} alt={movie_data.name} className="col-span-1 object-contain"/>
+          <img
+            src={movie_data.poster}
+            alt={movie_data.name}
+            className="col-span-1 object-contain"
+          />
           <div className="col-span-3 flex flex-col justify-between">
             <span className="text-lg font-medium">{movie_data.name}</span>
             <ul className="flex flex-wrap gap-2">
-              <li><Badge variant={"outline"} className="text-accent border-accent">Imdb {movie_data.imdbRate}</Badge></li>
-              <li><Badge variant={"outline"}>{movie_data.length}ph</Badge></li>
-              <li><Badge variant={"outline"}>{movie_data.publishYear}</Badge></li>
-              <li><Badge >{movie_data.status}</Badge></li>
-              <li>{movie_data?.categories?.map((value)=>(
-                <Badge key={value}>{value}</Badge>
-              ))}</li>
+              <li>
+                <Badge
+                  variant={"outline"}
+                  className="text-accent border-accent"
+                >
+                  Imdb {movie_data.imdbRate}
+                </Badge>
+              </li>
+              <li>
+                <Badge variant={"outline"}>{movie_data.length}ph</Badge>
+              </li>
+              <li>
+                <Badge variant={"outline"}>{movie_data.publishYear}</Badge>
+              </li>
+              <li>
+                <Badge>{movie_data.status}</Badge>
+              </li>
+              <li>
+                {movie_data?.categories?.map((value) => (
+                  <Badge key={value}>{toTitleCase(dict[value] ?? value)}</Badge>
+                ))}
+              </li>
             </ul>
           </div>
         </div>
@@ -48,31 +81,31 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
         <ul className="description">
           <li>
             <span>Giới thiệu:</span>
-            <p className="text-muted-foreground">{movie_data.description}</p>
+            <p className="text-muted">{movie_data.description}</p>
           </li>
           <li className="flex gap-1">
             <span>Thời lượng:</span>
-            <p className="text-muted-foreground">{movie_data.length}ph</p>
+            <p className="text-muted">{movie_data.length}ph</p>
           </li>
           <li className="flex gap-1">
             <span>Đạo diễn:</span>
-            <p className="text-muted-foreground">{movie_data.director}</p>
+            <p className="text-muted">{movie_data.director}</p>
           </li>
           <li className="flex gap-1">
             <span>Sản xuất:</span>
-            <p className="text-muted-foreground">{movie_data.production}</p>
+            <p className="text-muted">{movie_data.production}</p>
           </li>
           <li className="flex gap-1">
             <span>Năm phát hành:</span>
-            <p className="text-muted-foreground">{movie_data.publishYear}</p>
+            <p className="text-muted">{movie_data.publishYear}</p>
           </li>
           <li className="flex gap-1">
             <span>Quốc gia:</span>
-            <p className="text-muted-foreground">{movie_data.country}</p>
+            <p className="text-muted">{movie_data.country}</p>
           </li>
           <li className="flex gap-1">
             <span>Nhãn:</span>
-            <p className="text-muted-foreground">{movie_data.label}</p>
+            <p className="text-muted">{movie_data.label}</p>
           </li>
         </ul>
         {/* Đề xuất */}
@@ -80,26 +113,37 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
           <span className="text-xl">Đề xuất cho bạn</span>
           <div></div>
         </div>
-
       </div>
 
       {/* Right side */}
       <div className="col-span-8 h-full z-10 mt-20">
         {/* Button */}
         <div className="function-button-section grid grid-cols-8 items-center">
-          <Link href={`/watch-movie/${movie_data.slug}`} className="flex items-center justify-center gap-2 bg-accent rounded-full col-start-1 w-40 h-10" >
-            <PlayIcon fill="var(--foreground)" size={16}/>
+          <Link
+            href={`/watch-movie/${movie_data.slug}`}
+            className="flex items-center justify-center gap-2 bg-accent rounded-full col-start-1 w-40 h-10"
+          >
+            <PlayIcon fill="var(--foreground)" size={16} />
             <span className="font-medium text-lg">Xem ngay</span>
           </Link>
           <ul className="flex justify-around col-start-3 col-span-2">
-            <li><ThumbsUpIcon className="icon" /></li>
-            <li><MessageSquareTextIcon className="icon" /></li>
-            <li><BookMarkedIcon className="icon" /></li>
-            <li><ShareIcon className="icon" /></li>
+            <li>
+              <ThumbsUpIcon className="icon" />
+            </li>
+            <li>
+              <MessageSquareTextIcon className="icon" />
+            </li>
+            <li>
+              <BookMarkedIcon className="icon" />
+            </li>
+            <li>
+              <ShareIcon className="icon" />
+            </li>
           </ul>
-          <div className="fact col-start-6 col-span-3 text-muted-foreground">
+          <div className="fact col-start-6 col-span-3 text-muted">
             <span className="font-bold text-foreground">Fact: </span>
-            Ngô Trung là người lãnh đạo cuộc khởi nghĩa vào 120 An Liễng, từ đó mới có phim này.
+            Ngô Trung là người lãnh đạo cuộc khởi nghĩa vào 120 An Liễng, từ đó
+            mới có phim này.
           </div>
         </div>
 
@@ -115,22 +159,18 @@ const MovieDescribe = async ({params} : {params: Promise<{slug: string}>}) => {
               <VersionEpisodeSection />
             </TabsContent>
 
-            <TabsContent value="actor">
-              Diễn viên
-            </TabsContent>
-            <TabsContent value="suggest">
-              Quạc gợi ý
-            </TabsContent>
+            <TabsContent value="actor">Diễn viên</TabsContent>
+            <TabsContent value="suggest">Quạc gợi ý</TabsContent>
           </Tabs>
         </div>
 
         {/* Comment section */}
         <div className="w-[80%]">
-            <CommentSection />
+          <CommentSection />
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MovieDescribe
+export default MovieDescribe;

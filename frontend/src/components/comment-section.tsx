@@ -11,8 +11,11 @@ const CommentSection = () => {
       {/* Title */}
       <div className='title flex gap-2 items-center'>
         <MessageSquareTextIcon className="icon" />
-        <span className='font-medium'>Bình luận</span>
+        <span className='font-medium '>Bình luận</span>
+        
       </div> 
+
+      <p className='text-accent text-sm'>Vui lòng đăng nhập để bình luận</p>
 
       <div className='bg-[#3D3B3B] p-4 rounded-md flex flex-col gap-2'>
         <Textarea 

@@ -31,5 +31,6 @@ interface CategoryType{
     "value": string,
     "order": number,
     "isDisplay": boolean,
+    "thumbnail": string,
     "movies": MovieType[]
 }

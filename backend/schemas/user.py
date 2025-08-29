@@ -10,7 +10,6 @@ class UserBase(SQLModel):
   avatar: Optional[str] = None
   role: str = "user"
   level: int = Field(default=0)
-  createAt: datetime
   
 
 

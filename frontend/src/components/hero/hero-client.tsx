@@ -14,11 +14,13 @@ const HeroClient = ({carousels}: {carousels: any}) => {
   return (
     <div className="relative">
       {/* Hero image */}
-      <div className="relative h-[90vh] w-full overflow-hidden">
-        <img
+      <div className="relative h-screen w-full overflow-hidden">
+        <Image
           src={heroMovie?.thumbnail}
           alt="Hero"
-          className="w-full h-full object-cover object-top"
+          objectFit='cover'
+          objectPosition='top'
+          fill
         />
         <div
           className="absolute inset-0"

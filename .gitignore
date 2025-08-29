@@ -39,6 +39,7 @@ api/
 Thumbs.db
 *.swp
 *.swo
+*test/
 
 # === Misc ===
 *.bak

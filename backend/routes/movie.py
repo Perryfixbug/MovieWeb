@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from dependencies import get_session
 from sqlmodel import Session, select, func
 from sqlalchemy.orm import selectinload
@@ -16,10 +16,29 @@ router = APIRouter(
 
 @router.get('/all')
 async def get_all_movies(
+  type: str = None,  
+  country: str = None, 
+  category: str = None,
   session: Session = Depends(get_session)
 )->List[MovieRead]:
-  movies = session.exec(select(Movie)).all()  
+  query = select(Movie)
+  if type:
+    query = query.where(Movie.type == type)
+  if country:
+    query = query.where(Movie.country == country)
+  if category:
+    query = query.join(Movie.categories).where(Category.value == category)
+
+  movies = session.exec(query).all()
+
   return movies
+
+@router.get('/country')
+async def get_all_countries(
+  session: Session = Depends(get_session)
+)->List[str]:
+  countries = session.exec(select(Movie.country).distinct()).all()
+  return countries
 
 @router.get('/{slug}')
 async def get_movie(
