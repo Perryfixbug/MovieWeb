@@ -1,3 +1,4 @@
+import LoginButton from "@/components/login-button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +17,7 @@ import {
   NavigationMenuLink,
   NavigationMenuContent,
 } from "@/components/ui/navigation-menu";
-import { fetchAPI } from "@/lib/api";
+import { fetchServer } from "@/lib/api";
 import { dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import { Menu, MenuIcon, Search, SearchIcon } from "lucide-react";
@@ -24,8 +25,8 @@ import Link from "next/link";
 import React from "react";
 
 const NavBar = async () => {
-  const categories = await fetchAPI("/category");
-  const countries = await fetchAPI("/movie/country");
+  const categories = await fetchServer("/category");
+  const countries = await fetchServer("/movie/country");
   return (
     <>
       {/* Giao diện mobile */}
@@ -54,7 +55,7 @@ const NavBar = async () => {
       </div>
 
       {/* Giao diện desktop */}
-      <div className="desktop hidden lg:flex justify-between items-center fixed w-full px-5 py-2 z-50">
+      <div className="desktop hidden lg:flex justify-between items-center fixed w-full px-5 py-2 z-20">
         <div className="main-section flex items-center gap-5">
           <Avatar className="p-2">
             <AvatarImage src="/vercel.svg" alt="logo" />
@@ -128,7 +129,7 @@ const NavBar = async () => {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-        <Button variant={"secondary"}>Đăng nhập</Button>
+        <LoginButton />
       </div>
     </>
   );

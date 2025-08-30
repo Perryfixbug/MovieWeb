@@ -1,4 +1,4 @@
-import { fetchAPI } from "@/lib/api";
+import { fetchServer } from "@/lib/api";
 import { categoryColor, dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 
 const CategorySection = async () => {
-  const data = await fetchAPI("/category");
+  const data = await fetchServer("/category");
   const categories = data.map((category: CategoryType) => category);
   return (
     <div className="px-5">

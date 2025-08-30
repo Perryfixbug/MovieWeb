@@ -1,6 +1,6 @@
 import CommentSection from '@/components/comment-section'
 import { Badge } from '@/components/ui/badge'
-import { fetchAPI } from '@/lib/api'
+import { fetchServer } from '@/lib/api'
 import { dict } from '@/lib/dictionnary'
 import { toTitleCase } from '@/lib/toCustomCase'
 import { BookMarkedIcon, ChevronLeftIcon, MessageSquareTextIcon, ShareIcon, ThumbsUpIcon } from 'lucide-react'
@@ -9,7 +9,7 @@ import ReactPlayer from 'react-player'
 
 const WatchMovie = async ({params}: {params: Promise<{slug: string}>}) => {
   const {slug} = await params
-  const movie_data = await fetchAPI(`/movie/${slug}`) as MovieType
+  const movie_data = await fetchServer(`/movie/${slug}`) as MovieType
 
   return (
     <div className='page pt-16 px-5 flex flex-col w-full h-full gap-5'>

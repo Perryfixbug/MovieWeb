@@ -2,10 +2,10 @@ import CategorySection from "@/components/category-section";
 import Hero from "@/components/hero";
 import MoviesByCategory from "@/components/movies-by-category";
 import Movie from "@/components/movie";
-import { fetchAPI } from "@/lib/api";
+import { fetchServer } from "@/lib/api";
 
 export default async function Home() {
-  const list = await fetchAPI("/category/movie") as CategoryType[];
+  const list = await fetchServer("/category/movie") as CategoryType[];
 
   return (
       <main className="flex flex-col w-full h-full gap-2">

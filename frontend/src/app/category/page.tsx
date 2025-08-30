@@ -1,5 +1,5 @@
 import Movie from "@/components/movie";
-import { fetchAPI } from "@/lib/api";
+import { fetchServer } from "@/lib/api";
 import { categoryColor, dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import Link from "next/link";
@@ -8,7 +8,7 @@ const Category = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const { slug } = await params;
   const color = categoryColor[slug] ?? "red";
 
-  const categories = (await fetchAPI(`/category`)) as CategoryType[];
+  const categories = (await fetchServer(`/category`)) as CategoryType[];
 
   return (
     <div

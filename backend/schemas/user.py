@@ -6,10 +6,17 @@ class UserBase(SQLModel):
   fullname: str
   username: str
   email: str
-  password: str
   avatar: Optional[str] = None
-  role: str = "user"
-  level: int = Field(default=0)
   
+class UserLogin(SQLModel):
+  username: str
+  password: str
 
+class UserRead(UserBase):
+  pass
 
+class UserCreate(UserBase):
+  password: str
+
+class UserUpdate(UserBase):
+  pass

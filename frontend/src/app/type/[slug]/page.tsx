@@ -1,5 +1,5 @@
 import Movie from '@/components/movie'
-import { fetchAPI } from '@/lib/api'
+import { fetchServer } from '@/lib/api'
 import { categoryColor, dict } from '@/lib/dictionnary'
 import { toTitleCase } from '@/lib/toCustomCase'
 import React from 'react'
@@ -15,7 +15,7 @@ const Type = async ({params}:{params: Promise<{slug: string}>}) => {
   const {slug} = await params
   const color = categoryColor[slug] ?? "red"
   
-  const movies = await fetchAPI(`/movie/all?type=${slug}`)
+  const movies = await fetchServer(`/movie/all?type=${slug}`)
 
   return (
     <div className='flex flex-col gap-10 pt-20 px-5 w-full h-screen' style={{background: `linear-gradient(to bottom, ${color} 0%, rgba(44, 44, 44, 1) 30%)`}}>

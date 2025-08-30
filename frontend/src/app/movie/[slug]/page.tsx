@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs";
 import VersionEpisodeSection from "@/components/version-episode-section";
-import { fetchAPI } from "@/lib/api";
+import { fetchServer } from "@/lib/api";
 import { dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import {
@@ -23,7 +23,7 @@ const MovieDescribe = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-  const movie_data = (await fetchAPI(`/movie/${slug}`)) as MovieType;
+  const movie_data = (await fetchServer(`/movie/${slug}`)) as MovieType;
 
   return (
     <div className="relative h-[90vh] w-full overflow-hidden grid grid-cols-12 gap-5 px-5">

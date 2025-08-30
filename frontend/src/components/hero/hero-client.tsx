@@ -18,8 +18,7 @@ const HeroClient = ({carousels}: {carousels: any}) => {
         <Image
           src={heroMovie?.thumbnail}
           alt="Hero"
-          objectFit='cover'
-          objectPosition='top'
+          className='object-cover object-top'
           fill
         />
         <div

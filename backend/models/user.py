@@ -7,6 +7,9 @@ from models.userListMovie import UserListMovie
 
 class User(UserBase, table=True):
   id: int = Field(primary_key=True)
+  password: str
+  level: int = Field(default=0)
+  role: str = Field(default="user")
   createAt: datetime = Field(default_factory=datetime.now)
   uploaded_movies: List["Movie"] = Relationship(back_populates="uploader")
   comments: List["Comment"] = Relationship(back_populates="user")
