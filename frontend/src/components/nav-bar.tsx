@@ -27,6 +27,7 @@ import React from "react";
 const NavBar = async () => {
   const categories = await fetchServer("/category");
   const countries = await fetchServer("/movie/country");
+  
   return (
     <>
       {/* Giao diện mobile */}
@@ -76,53 +77,47 @@ const NavBar = async () => {
             <NavigationMenuList className="justify-between w-[500px]">
               {/* Thể loại */}
               <NavigationMenuItem className="relative">
-                <NavigationMenuTrigger>
-                  Thể loại
-                </NavigationMenuTrigger>
+                <NavigationMenuTrigger>Thể loại</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid grid-cols-3 w-[500px]">
+                  <div className="grid grid-cols-3 w-[500px]">
                     {categories.map((category: CategoryType) => (
-                      <li key={category.value}>
-                        <NavigationMenuLink
-                          href={`/category/${category.value}`}
-                        >
-                          {toTitleCase(dict[category.value] ?? category.value)}
-                        </NavigationMenuLink>
-                      </li>
+                      <NavigationMenuLink asChild key={category.id}>  
+                        <Link href={`/category/${category.value}`}>
+                          {toTitleCase(
+                            dict[category.value] ?? category.value
+                          )}
+                        </Link>
+                      </NavigationMenuLink>
                     ))}
-                  </ul>
+                  </div>
                 </NavigationMenuContent>
               </NavigationMenuItem>
               {/* Phim bộ */}
               <NavigationMenuItem>
-                <NavigationMenuLink href={`/type/serie`}>
-                  Phim bộ
+                <NavigationMenuLink asChild>
+                  <Link href={`/type/serie`}>Phim bộ</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               {/* Phim lẻ */}
               <NavigationMenuItem>
-                <NavigationMenuLink href={`/type/movie`}>
-                  Phim lẻ
+                <NavigationMenuLink asChild>
+                  <Link href={`/type/movie`}>Phim lẻ</Link>
                 </NavigationMenuLink>
               </NavigationMenuItem>
               {/* Quốc gia */}
               <NavigationMenuItem>
-                <NavigationMenuTrigger>
-                  Quốc gia
-                </NavigationMenuTrigger>
+                <NavigationMenuTrigger>Quốc gia</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid grid-cols-3 w-[500px]">
+                  <div className="grid grid-cols-3 w-[500px]">
                     {countries.map((country: string) => (
-                      <li key={country}>
-                        <NavigationMenuLink
-                          href={`/country/${country}`}
-                        >
+                      <NavigationMenuLink asChild key={country}>
+                        <Link href={`/country/${country}`}>
                           {toTitleCase(dict[country] ?? country)}
-                        </NavigationMenuLink>
-                      </li>
+                        </Link>
+                      </NavigationMenuLink>
                     ))}
-                  </ul>
-              </NavigationMenuContent>
+                  </div>
+                </NavigationMenuContent>
               </NavigationMenuItem>
               {/* Diễn viên */}
               <NavigationMenuItem>Diễn viên</NavigationMenuItem>

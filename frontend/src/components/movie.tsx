@@ -13,7 +13,7 @@ const Movie = ({movie_data}:{ movie_data: MovieType}) => {
       </div>
       <div className="flex flex-col items-center">
         <span className="text-center h-12 line-clamp-2">{movie_data.name}</span>
-        <span className="text-muted-foreground">{movie_data.publishYear}</span>
+        <span className="text-muted">{movie_data.publishYear}</span>
       </div>
     </Link>  
     

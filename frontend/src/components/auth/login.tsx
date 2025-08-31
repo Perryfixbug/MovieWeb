@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/authContext";
-import { fetchServer } from "@/lib/api";
-import { X } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,7 +11,7 @@ interface LoginForm {
 }
 
 const Login = ({ setType }: { setType: any }) => {
-  const { register, handleSubmit, reset } = useForm<LoginForm>();
+  const { register, handleSubmit } = useForm<LoginForm>();
   const {login} = useAuth()
 
   const onsubmit: SubmitHandler<LoginForm> = (data) => {

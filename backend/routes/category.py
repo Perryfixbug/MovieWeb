@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from sqlmodel import Session, select, desc
+from sqlmodel import Session, select, asc
 from models.category import Category
 from schemas.category import CategoryRead, CategoryCreate, CategoryHasMovie
 from schemas.movie import MovieRead
@@ -26,7 +26,7 @@ def get_all_movie_by_display_category(
   display_categories = session.exec(
     select(Category)
     .where(Category.isDisplay == True)
-    .order_by(desc(Category.order))
+    .order_by(asc(Category.order))
     .options(selectinload(Category.movies))
   ).all()    
   return display_categories

@@ -14,15 +14,16 @@ import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 import { Book, Heart, LogOut, User } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const ProfileButton = () => {
   const [userInfo, setUserInfo] = useState<UserType>()
+  const router = useRouter()
   const {logout, isAuth} = useAuth()
   useEffect(()=>{
     if(!isAuth) return
     async function fetchUserInfo() {
       const userInfo = await fetchClient("/user/me")
-      console.log(userInfo)
       setUserInfo(userInfo)
     }
     fetchUserInfo()
@@ -63,7 +64,10 @@ const ProfileButton = () => {
               </Link>
             </DropdownMenuItem>
             {/* Thoát */}
-            <DropdownMenuItem onClick={()=>logout()}>
+            <DropdownMenuItem onClick={()=>{
+              logout()
+              router.replace('/')
+            }}>
               <Link href={'/profile'} className="flex justify-start items-center gap-2">
                 <LogOut />
                 Thoát
