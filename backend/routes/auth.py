@@ -1,11 +1,11 @@
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Response, Request
 from sqlmodel import Session, select, or_
 from dependencies import get_session
 from models.user import User
 from schemas.user import UserRead, UserLogin, UserCreate, UserUpdate
 import bcrypt
 from typing import Dict
-from lib.jwt import jwt_encoder
+from lib.jwt import jwt_encoder, jwt_decoder
 
 router = APIRouter(
   prefix='/auth',
@@ -38,8 +38,8 @@ async def login(
     key="refreshToken",
     value=jwt_encoder(data=data, delta_time=24),
     httponly=True,
-    secure=True,
-    samesite="strict",
+    secure=False,
+    samesite="lax",
     max_age=60*60*24*7 #1 ngày 
   )
   return {
@@ -72,11 +72,38 @@ async def signup(
     key="refreshToken",
     value=jwt_encoder(data=token_data, delta_time=24*7),
     httponly=True,
-    secure=True,
-    samesite="strict",
+    secure=False,
+    samesite="lax",
     max_age=60*60*24*7 #1 tuần
   )
 
   return {
     "acessToken": jwt_encoder(data=token_data, delta_time=15/60)
   }
+
+@router.get('/refresh')
+async def refresh_token(
+  request: Request,
+  session: Session = Depends(get_session)
+)->Dict:
+  refresh_token = request.cookies.get("refreshToken")
+  if not refresh_token:
+    raise HTTPException(status_code=401, detail="Chưa đăng nhập, xin mời đăng nhập")
+  payload = jwt_decoder(refresh_token)
+  userId = int(payload["userId"])
+  user = session.get(User, userId)
+  if not user:
+    raise HTTPException(status_code=401, detail="Không tìm thấy người dùng")
+  data = {
+    "userId": user.id,
+    "role": user.role
+  }
+  return {
+    "accessToken": jwt_encoder(data=data, delta_time=15/60)
+  }
+
+@router.delete('/logout')
+async def logout(
+  response: Response
+):
+  response.delete_cookie("refreshToken")

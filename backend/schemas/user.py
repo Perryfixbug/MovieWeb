@@ -13,7 +13,9 @@ class UserLogin(SQLModel):
   password: str
 
 class UserRead(UserBase):
-  pass
+  level: int
+  role: str
+  createAt: datetime
 
 class UserCreate(UserBase):
   password: str

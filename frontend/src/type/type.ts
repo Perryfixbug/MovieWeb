@@ -34,3 +34,15 @@ interface CategoryType{
     "thumbnail": string,
     "movies": MovieType[]
 }
+
+interface UserType{
+    "id": string,
+    "fullname": string,
+    "username": string,
+    "email": string,
+    "password": string,
+    "avatar": string,
+    "role": string,
+    "level": string,
+    "createAt": string
+}

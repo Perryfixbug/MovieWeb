@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/context/authContext";
+import { fetchServer } from "@/lib/api";
 import { X } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -12,8 +14,10 @@ interface LoginForm {
 
 const Login = ({ setType }: { setType: any }) => {
   const { register, handleSubmit, reset } = useForm<LoginForm>();
-  const onsubmit: SubmitHandler<LoginForm> = async (data) => {
-    console.log(data); 
+  const {login} = useAuth()
+
+  const onsubmit: SubmitHandler<LoginForm> = (data) => {
+    login(data)
   };
   return (
     <div className="w-3xl m-auto aspect-video grid grid-cols-2 rounded-md overflow-clip bg-background z-20">

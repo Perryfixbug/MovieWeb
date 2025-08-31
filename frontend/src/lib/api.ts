@@ -36,9 +36,10 @@ export async function fetchClient(endpoint: string, method='GET', body?: any, he
     })
 
     //token hết hạn -> refresh
-    if(res.status == 401 && endpoint!='/refresh'){
-      const refreshRes = await fetch(`${URL}/refresh`, {
+    if(res.status == 401 && endpoint!='/auth/refresh'){
+      const refreshRes = await fetch(`${URL}/auth/refresh`, {
         method: "POST",
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json'
         }
