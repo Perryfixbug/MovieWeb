@@ -17,30 +17,28 @@ import BackButton from "@/components/back-button";
 
 const WatchMovie = async ({
   params,
+  searchParams
 }: {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>,
+  searchParams: { [key: string]: string | string[] | undefined }
 }) => {
   const { slug } = await params;
+  const { record } = searchParams;
   const movie_data = (await fetchServer(`/movie/${slug}`)) as MovieType;
+  const link = movie_data.videos.find((video: VideoType)=>video.name == record)?.link
 
   return (
-    <div className="page pt-16 px-5 flex flex-col w-full h-full gap-5">
-      {/* <Link
-        href={`/movie/${slug}`}
-        className="step-back flex gap-2 items-center"
-      >
-        <ChevronLeftIcon size={16} />
-        {movie_data.name}
-      </Link> */}
+    <div className="page pt-16 px-5 flex flex-col w-full h-full gap-10">
       <BackButton>Quay lại</BackButton>
-      <div className="watch-section w-8/12 m-auto aspect-video">
+      <div className="watch-section bg-black rounded-lg overflow-hidden w-8/12 mx-auto">
         <ReactPlayer
-          src={movie_data.linkVideo}
+          src={link || movie_data.trailer}
           controls
-          className="aspect-video rounded-sm"
+          className="aspect-video rounded-sm object-contain"
           width={"100%"}
           height={"100%"}
           playIcon
+          volume={0.5}
         />
       </div>
 

@@ -27,6 +27,8 @@ from models.actor import Actor
 from models.payment import Payment
 from models.acting import Acting
 from models.like import Like
+from models.video import Video
+from models.sub import Sub
 from models.category import Category
 from models.categorymovie import CategoryMovie
 from models.userListMovie import UserListMovie

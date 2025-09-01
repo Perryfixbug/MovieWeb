@@ -1,3 +1,19 @@
+interface VideoType{
+  id: number,
+  name: string,
+  link: string,
+  createDate: Date 
+  movieId: number 
+}
+
+interface SubType{
+  id: number,
+  name: string,
+  link: string,
+  createDate: Date 
+  movieId: number 
+}
+
 interface MovieType {
   id: number;
   slug: string;
@@ -17,9 +33,9 @@ interface MovieType {
   categories: [string];
   status: string;
   actor: string;
-  linkTrailer: string;
-  linkVideo: string;
-  linkSub: string;
+  trailer: string;
+  videos: VideoType[];
+  sub: SubType[];
   thumbnail: string;
   poster: string;
   userId: number;

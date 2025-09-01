@@ -32,7 +32,7 @@ const HeroClient = ({carousels}: {carousels: any}) => {
 
       {/* Description */}
       <div className="description absolute left-0 top-1/3 flex flex-col px-5 w-1/3 gap-2">
-        <Link href={`/watch-movie/${heroMovie?.slug}`} className="bg-background rounded-full w-12 h-12 flex items-center justify-center">
+        <Link href={`/watch-movie/${heroMovie?.slug}?record=${heroMovie?.videos[0]?.name}`} className="bg-background rounded-full w-12 h-12 flex items-center justify-center">
           <PlayIcon size={24} fill="var(--foreground)" />
         </Link>
         <span className="text-5xl font-medium">{heroMovie?.name}</span>

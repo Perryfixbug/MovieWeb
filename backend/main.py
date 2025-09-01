@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routes import movie, carousel, category, auth, user, comment
+from routes import movie, carousel, category, auth, user, comment, video
 
 app = FastAPI()
 
@@ -22,3 +22,4 @@ app.include_router(category.router, prefix='/api/v1')
 app.include_router(auth.router, prefix='/api/v1')
 app.include_router(user.router, prefix='/api/v1')
 app.include_router(comment.router, prefix='/api/v1')
+app.include_router(video.router, prefix='/api/v1')

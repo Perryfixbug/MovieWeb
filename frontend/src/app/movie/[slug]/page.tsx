@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsTrigger, TabsList } from "@/components/ui/tabs";
 import UserComment from "@/components/user-comment";
-import VersionEpisodeSection from "@/components/version-episode-section";
+import Record from "@/components/record-section";
 import { fetchServer } from "@/lib/api";
 import { dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
@@ -42,7 +42,7 @@ const MovieDescribe = async ({
             "linear-gradient(to bottom, rgba(44, 44, 44, 0.7) 0%, rgba(44, 44, 44, 0.5) 50%, rgba(44, 44, 44, 1) 100%)",
         }}
       />
-      <BackButton className="z-20 mb-2">Quay lại</BackButton>
+      <BackButton className="z-20 mb-5">Quay lại</BackButton>
       <div className="grid grid-cols-12 gap-5 ">
         {/* Left side */}
         <div className="col-span-4 h-full z-10 flex flex-col gap-6">
@@ -122,7 +122,7 @@ const MovieDescribe = async ({
         </div>
 
         {/* Right side */}
-        <div className="col-span-8 h-full z-10 ">
+        <div className="col-span-8 h-full z-10 flex flex-col gap-2">
           {/* Button */}
           <div className="function-button-section grid grid-cols-8 items-center">
             <Link
@@ -152,7 +152,7 @@ const MovieDescribe = async ({
             </div>
           </div>
 
-          {/* Movie interact */}
+          {/* Movie episode */}
           <div className="">
             <Tabs defaultValue="episode">
               <TabsList className="bg-transparent">
@@ -161,9 +161,8 @@ const MovieDescribe = async ({
                 <TabsTrigger value="suggest">Đề xuất</TabsTrigger>
               </TabsList>
               <TabsContent value="episode">
-                <VersionEpisodeSection />
+                <Record movie_data={movie_data} />
               </TabsContent>
-
               <TabsContent value="actor">Diễn viên</TabsContent>
               <TabsContent value="suggest">Quạc gợi ý</TabsContent>
             </Tabs>
