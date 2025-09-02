@@ -13,3 +13,9 @@ export function toTitleCase(input: string): string {
     })
     .join(' ');
 }
+
+export function toAlias(input: string): string{
+  const words = input.split(/\s+/)
+  if (words.length == 1) return words[0].charAt(0).toUpperCase()
+  return words[0].charAt(0).toUpperCase() + words[words.length-1].charAt(0).toUpperCase() || ""
+}

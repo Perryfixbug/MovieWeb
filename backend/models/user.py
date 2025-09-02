@@ -14,12 +14,10 @@ class User(UserBase, table=True):
   uploaded_movies: List["Movie"] = Relationship(back_populates="uploader")
   comments: List["Comment"] = Relationship(back_populates="user")
   likes: List["Like"] = Relationship(back_populates="user")
-  reviews: List["Review"] = Relationship(back_populates="user")
   payments: List["Payment"] = Relationship(back_populates="user")
   listMovies: List["Movie"] = Relationship(back_populates="userList", link_model=UserListMovie)
 
 from models.movie import Movie
 from models.comment import Comment
 from models.like import Like
-from models.review import Review
 from models.payment import Payment

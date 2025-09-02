@@ -22,11 +22,11 @@ if config.config_file_name is not None:
 from models.user import User
 from models.movie import Movie
 from models.comment import Comment
-from models.review import Review
 from models.actor import Actor
 from models.payment import Payment
 from models.acting import Acting
 from models.like import Like
+from models.vote import Vote
 from models.video import Video
 from models.sub import Sub
 from models.category import Category

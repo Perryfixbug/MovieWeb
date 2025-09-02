@@ -14,16 +14,17 @@ import {
 import Link from "next/link";
 import ReactPlayer from "react-player";
 import BackButton from "@/components/back-button";
+import RecordSection from "@/components/record-section";
 
 const WatchMovie = async ({
   params,
   searchParams
 }: {
   params: Promise<{ slug: string }>,
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
 }) => {
   const { slug } = await params;
-  const { record } = searchParams;
+  const { record } = await searchParams;
   const movie_data = (await fetchServer(`/movie/${slug}`)) as MovieType;
   const link = movie_data.videos.find((video: VideoType)=>video.name == record)?.link
 
@@ -78,12 +79,15 @@ const WatchMovie = async ({
             </ul>
           </div>
           <p className="col-span-8">{movie_data.description}</p>
+          <div className="col-span-full">
+            <RecordSection movie_data={movie_data}/>
+          </div>
           <div className="col-span-8 flex flex-col gap-2">
             <WriteCommentSection movieId={movie_data.id} />
             <UserComment movieId={movie_data.id} />
           </div>
         </div>
-        {/* Righ side */}
+        {/* Right side */}
         <div className="right col-span-4 grid grid-cols-4 gap-5 grid-rows-[20px_100px_1fr]">
           <ul className="flex justify-start h-5 gap-5 items-center col-start-1 col-span-2">
             <li><ThumbsUpIcon className="icon" /></li>

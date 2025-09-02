@@ -16,15 +16,15 @@ class Movie(MovieBase, table=True):
   subs: List["Sub"] = Relationship(back_populates="movie")
   actors: List["Actor"] = Relationship(back_populates="actedMovies", link_model=Acting)
   uploader: "User" = Relationship(back_populates="uploaded_movies")
-  reviews: List["Review"] = Relationship(back_populates="movie")
+  like: List["Like"] = Relationship(back_populates="movie")
   userList: List["User"] = Relationship(back_populates="listMovies", link_model=UserListMovie)
 
-  
+
 from models.category import Category
 from models.video import Video
 from models.sub import Sub
 from models.actor import Actor
 from models.user import User
-from models.review import Review
+from models.like import Like
 
   

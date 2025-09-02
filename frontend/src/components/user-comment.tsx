@@ -2,6 +2,7 @@ export const revalidate = 60
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchServer } from "@/lib/api";
+import { toAlias } from "@/lib/toCustomCase";
 import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 
 const CommentComponent = async ({ comment_data }: { comment_data: CommentType }) => {
@@ -9,14 +10,14 @@ const CommentComponent = async ({ comment_data }: { comment_data: CommentType })
     <div className="comment flex gap-2">
       <Avatar>
         <AvatarImage src={comment_data.user.avatar} />
-        <AvatarFallback>{comment_data.user.fullname}</AvatarFallback>
+        <AvatarFallback>{toAlias(comment_data.user.fullname)}</AvatarFallback>
       </Avatar>
       <div>
         <div className="bg-background rounded-xl px-5 py-1">
           <span className="font-medium text-sm">
             {comment_data.user.fullname}
           </span>
-          <p className="">{comment_data.content}</p>
+          <p className="text-muted">{comment_data.content}</p>
         </div>
         <ul className="flex items-center gap-2 px-5">
           <li className="cursor-pointer hover:text-accent">

@@ -2,11 +2,9 @@ from sqlmodel import SQLModel, Field
 from datetime import datetime
 from enum import Enum
 
-class LikeTargetType(str, Enum):
-  MOVIE = "movie"
-  COMMENT = "commnent"
-
 class LikeBase(SQLModel):
-  targetId: int
-  targetType: LikeTargetType
+  movieId: int = Field(foreign_key="movie.id")
   userId: int = Field(foreign_key="user.id")
+
+class LikeRead(LikeBase):
+  pass

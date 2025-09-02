@@ -4,7 +4,7 @@ from datetime import date
 
 class ActorBase(SQLModel):
   name: str
-  description: str
-  dob: date
-  country: str
+  description: Optional[str] = None
+  dob: Optional[date] = None
+  country: Optional[str] = None
 
