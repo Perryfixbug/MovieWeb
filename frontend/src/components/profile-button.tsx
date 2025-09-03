@@ -18,17 +18,9 @@ import { useRouter } from "next/navigation";
 import { toAlias } from "@/lib/toCustomCase";
 
 const ProfileButton = () => {
-  const [userInfo, setUserInfo] = useState<UserType>()
   const router = useRouter()
-  const {logout, isAuth} = useAuth()
-  useEffect(()=>{
-    if(!isAuth) return
-    async function fetchUserInfo() {
-      const userInfo = await fetchClient("/user/me")
-      setUserInfo(userInfo)
-    }
-    fetchUserInfo()
-  }, [isAuth])
+  const {logout, isAuth, userInfo} = useAuth()
+  
   return (
     <div className="">
       <DropdownMenu modal={false}>

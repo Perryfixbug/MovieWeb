@@ -2,11 +2,12 @@ from sqlmodel import SQLModel, Field
 from datetime import datetime
 from enum import Enum
 from schemas.user import UserRead
-from typing import List
+from schemas.vote import VoteRead
+from typing import List, Optional
 
 class CommentTargetType(str, Enum):
   MOVIE = "movie"
-  COMMENT = "commnent"
+  COMMENT = "comment"
 
 class CommentBase(SQLModel):
   content: str
@@ -17,8 +18,17 @@ class CommentBase(SQLModel):
 
 class CommentRead(CommentBase):
   id: int
-  reply: List["CommentRead"] = None
+  replies: Optional[List["CommentReply"]] = None
+  votes: Optional[List["VoteRead"]] = None
   user: UserRead
+
+  class Config:
+    from_attributes = True
+
+class CommentReply(CommentBase):
+  id: int
+  user: UserRead
+  votes: Optional[List["VoteRead"]] = None
 
 class CommentCreate(CommentBase):
   pass

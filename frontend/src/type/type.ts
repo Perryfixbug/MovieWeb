@@ -69,6 +69,16 @@ interface CommentType {
   targetType: string,
   content: string,
   spoil: boolean,
+  votes: [VoteType],
+  replies: [any]
   createAt: Date,
+  user: UserType
+}
+
+interface VoteType{
+  id: number, 
+  value: boolean,
+  createAt: Date,
+  userId: number,
   user: UserType
 }

@@ -48,7 +48,7 @@ async def login(
 
 @router.post('/signup')
 async def signup(
-   response: Response,
+  response: Response,
   user_data: UserCreate,
   session: Session = Depends(get_session)
 )->UserRead:

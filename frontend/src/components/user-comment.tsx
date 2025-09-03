@@ -1,5 +1,6 @@
 export const revalidate = 60
 
+import InteractionCommentSection from "@/components/interact-comment-section";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchServer } from "@/lib/api";
 import { toAlias } from "@/lib/toCustomCase";
@@ -12,24 +13,36 @@ const CommentComponent = async ({ comment_data }: { comment_data: CommentType })
         <AvatarImage src={comment_data.user.avatar} />
         <AvatarFallback>{toAlias(comment_data.user.fullname)}</AvatarFallback>
       </Avatar>
-      <div>
-        <div className="bg-background rounded-xl px-5 py-1">
+      <div className="flex flex-col gap-1">
+        {/* Khối comment text, gói theo nội dung */}
+        <div className="bg-background rounded-xl px-5 py-1 w-fit">
           <span className="font-medium text-sm">
             {comment_data.user.fullname}
           </span>
-          <p className="text-muted">{comment_data.content}</p>
+          <p className="text-muted break-words">{comment_data.content}</p>
         </div>
-        <ul className="flex items-center gap-2 px-5">
-          <li className="cursor-pointer hover:text-accent">
-            <ArrowBigUp className="icon" />
-          </li>
-          <li className="cursor-pointer hover:text-accent">
-            <ArrowBigDown className="icon" />
-          </li>
-          <li className="cursor-pointer hover:underline hover:text-accent">
-            Trả lời
-          </li>
-        </ul>
+        <InteractionCommentSection comment_data={comment_data} rootId={null}/>
+        {/* Reply */}
+        <div className="reply">
+          {comment_data?.replies?.map((comment: CommentType)=>(
+            <div key={comment.id} className="flex gap-2">
+              <Avatar>
+                <AvatarImage src={comment.user.avatar} />
+                <AvatarFallback>{toAlias(comment.user.fullname)}</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col gap-1">
+                {/* Khối comment text, gói theo nội dung */}
+                <div className="bg-background rounded-xl px-5 py-1 w-fit">
+                  <span className="font-medium text-sm">
+                    {comment.user.fullname}
+                  </span>
+                  <p className="text-muted break-words">{comment.content}</p>
+                </div>
+                <InteractionCommentSection comment_data={comment} rootId={comment_data.id}/>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

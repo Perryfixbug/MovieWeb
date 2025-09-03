@@ -24,18 +24,6 @@ const LoginButton = () => {
       <AuthComponent isOpen={isOpen} setIsOpen={setIsOpen} />
     </>
   );
-  // return(
-  //   <div>
-  //     <Dialog>
-  //       <DialogTrigger>
-  //         Đăng nhập
-  //       </DialogTrigger>
-  //       <DialogContent className="w-[800px] h-[500px]">
-  //         <AuthComponent />
-  //       </DialogContent>
-  //     </Dialog>
-  //   </div>
-  // )
 };
 
 export default LoginButton;

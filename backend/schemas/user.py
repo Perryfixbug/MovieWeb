@@ -13,6 +13,7 @@ class UserLogin(SQLModel):
   password: str
 
 class UserRead(UserBase):
+  id: int
   level: int
   role: str
   createAt: datetime

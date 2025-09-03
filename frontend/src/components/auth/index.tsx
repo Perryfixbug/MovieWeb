@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { X } from 'lucide-react'
 import React, { useState } from 'react'
 
-const AuthComponent = ({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: any}) => {
+const AuthComponent = ({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: React.Dispatch<React.SetStateAction<boolean>>}) => {
   const [type, setType] = useState<"login" | "signup" | "forget-password">("login")
   if (!isOpen) return null
   return(

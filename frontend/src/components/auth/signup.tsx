@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAuth } from "@/context/authContext";
+import { fetchServer } from "@/lib/api";
 import { X } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -13,9 +15,10 @@ interface SignupForm {
 }
 
 const Signup = ({ setType }: { setType: any }) => {
-  const { register, handleSubmit, reset } = useForm();
+  const {signup} = useAuth()
+  const { register, handleSubmit} = useForm<SignupForm>();
   const onsubmit = async (data: SignupForm) => {
-    console.log(data);
+    signup(data)
   };
   return (
     <div className="w-3xl m-auto aspect-video grid grid-cols-2 rounded-md overflow-clip bg-background z-20">
@@ -39,7 +42,7 @@ const Signup = ({ setType }: { setType: any }) => {
         </div>
       </div>
       {/* Right side */}
-      <form className="p-12 flex flex-col gap-2 relative">
+      <form onSubmit={handleSubmit(onsubmit)} className="p-12 flex flex-col gap-2 relative">
         <span className="text-lg">Đăng ký</span>
         {/* Fullname */}
         <Input

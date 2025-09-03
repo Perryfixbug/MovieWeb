@@ -16,7 +16,7 @@ class Movie(MovieBase, table=True):
   subs: List["Sub"] = Relationship(back_populates="movie")
   actors: List["Actor"] = Relationship(back_populates="actedMovies", link_model=Acting)
   uploader: "User" = Relationship(back_populates="uploaded_movies")
-  like: List["Like"] = Relationship(back_populates="movie")
+  likes: List["Like"] = Relationship(back_populates="movie")
   userList: List["User"] = Relationship(back_populates="listMovies", link_model=UserListMovie)
 
 

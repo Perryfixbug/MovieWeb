@@ -121,6 +121,25 @@
   }
 }
 
+body {
+  overflow-y: auto;
+  scrollbar-gutter: stable overlay; /* scrollbar đè lên nội dung, không chiếm chỗ */
+}
+
+/* Thêm style đẹp cho scrollbar (webkit-based) */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-track {
+  background: transparent;
+} 
+
 .icon{
   @apply w-5 h-5
 }
