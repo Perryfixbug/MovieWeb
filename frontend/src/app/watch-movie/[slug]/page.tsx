@@ -6,15 +6,14 @@ import { dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import {
   BookMarkedIcon,
-  ChevronLeftIcon,
   MessageSquareTextIcon,
   ShareIcon,
   ThumbsUpIcon,
 } from "lucide-react";
-import Link from "next/link";
 import ReactPlayer from "react-player";
 import BackButton from "@/components/back-button";
 import RecordSection from "@/components/record-section";
+import Image from "next/image";
 
 const WatchMovie = async ({
   params,
@@ -46,11 +45,16 @@ const WatchMovie = async ({
       <div className="other grid grid-cols-12 gap-5">
         {/* Left side */}
         <div className="left col-span-8 grid grid-cols-8 gap-5 w-full justify-between">
-          <img
-            src={movie_data.poster}
-            alt={movie_data.name}
-            className="col-span-1 object-contain"
-          />
+          <div className="col-span-1 relative">
+            <Image
+              src={movie_data.poster}
+              alt={movie_data.name}
+              width={300}
+              height={500}
+              className="object-cover"
+            />
+          </div>
+          
           <div className="col-span-3 flex flex-col justify-between">
             <span className="text-lg font-medium">{movie_data.name}</span>
             <ul className="flex flex-wrap gap-2">

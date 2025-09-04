@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -12,12 +13,13 @@ const RecordSection = ({movie_data}: {movie_data: MovieType}) => {
             href={`/watch-movie/${movie_data.slug}?record=${video.name}`}
             className='relative flex justify-center items-center aspect-video w-30 rounded-md overflow-clip border'
           >
-            <img 
-              src={movie_data.thumbnail}
+            <Image 
+              src='/images/mov list.webp'
               alt='#'
-              className='absolute w-full h-full z-0 object-cover'
+              fill
+              className='z-0 object-cover'
             />
-            <div className='absolute top-0 bg-background/65 z-10 w-full h-full' />
+            <div className='absolute top-0 bg-background/60 z-10 w-full h-full' />
             <span className='z-20 text-lg font-medium'>{video.name}</span>
           </Link>
         ))}

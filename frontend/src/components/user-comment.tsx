@@ -4,7 +4,6 @@ import InteractionCommentSection from "@/components/interact-comment-section";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchServer } from "@/lib/api";
 import { toAlias } from "@/lib/toCustomCase";
-import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 
 const CommentComponent = async ({ comment_data }: { comment_data: CommentType }) => {
   return (

@@ -4,11 +4,13 @@ import Link from "next/link"
 const Movie = ({movie_data}:{ movie_data: MovieType}) => {
   return (
     <Link className="w-32" href={`/movie/${movie_data.slug}`}>
-      <div className="w-32 h-48">
-        <img 
+      <div className="w-32 h-48 relative rounded-sm overflow-clip">
+        <Image 
           src={movie_data.poster}
           alt={movie_data.name}
-          className="object-cover w-full h-full rounded-sm" 
+          className="object-cover" 
+          fill
+          sizes="128px"
         />
       </div>
       <div className="flex flex-col items-center">

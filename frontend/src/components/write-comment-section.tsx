@@ -1,16 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { useAuth } from "@/context/authContext";
-import { fetchClient, fetchServer } from "@/lib/api";
+import { fetchClient } from "@/lib/api";
 import { useRouter } from "next/navigation";
 import {
   MessageSquareTextIcon,
   SendIcon,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 
 interface CommentForm {

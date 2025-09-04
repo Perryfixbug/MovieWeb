@@ -10,7 +10,7 @@ interface LoginForm {
   password: string;
 }
 
-const Login = ({ setType }: { setType: any }) => {
+const Login = ({ setType }: { setType: React.Dispatch<React.SetStateAction<"login" | "signup" | "forget-password">> }) => {
   const { register, handleSubmit } = useForm<LoginForm>();
   const {login} = useAuth()
 

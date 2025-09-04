@@ -1,5 +1,4 @@
 import Movie from "@/components/movie";
-import { fetchServer } from "@/lib/api";
 import { dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import React from "react";

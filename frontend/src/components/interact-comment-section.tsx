@@ -4,7 +4,6 @@ import { fetchClient, fetchServer } from "@/lib/api";
 import { ArrowBigDown, ArrowBigUp, Send, X } from "lucide-react";
 import React, { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -37,7 +36,7 @@ const InteractCommentSection = ({
   const [vote, setVote] = useState(initialVote);
   const [myVote, setMyVote] = useState<boolean | null>(userVote)  //null = chưa vote, true = up, false = down
   const [replyOpen, setReplyOpen] = useState(false)
-  const [relpyContent, setReplyContent] = useState("")
+  const [relpyContent, setReplyContent] = useState("@"+comment_data.user.fullname+" ")
   //Đồng bộ myVote khi userVote thay đổi
   useEffect(() => {
     setMyVote(userVote);
@@ -89,12 +88,12 @@ const InteractCommentSection = ({
     e.preventDefault()
     if(!relpyContent.trim()) return 
 
-    const data = await fetchClient('/comment', "POST", {
+    await fetchClient('/comment', "POST", {
       targetId: rootId ?? comment_data.id,
       targetType: "comment",
-      content: "@"+ comment_data.user.fullname + " " + relpyContent,
+      content: relpyContent,
     })
-    setReplyContent("")
+    setReplyContent("@"+comment_data.user.fullname+" ")
     setReplyOpen(false)
     router.refresh()
   }

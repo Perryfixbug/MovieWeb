@@ -1,5 +1,5 @@
 import { fetchServer } from "@/lib/api";
-import { categoryColor, dict } from "@/lib/dictionnary";
+import { dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,9 +19,12 @@ const CategorySection = async () => {
             key={category.value}
             className="min-w-54 aspect-video relative flex items-center justify-center rounded-lg overflow-clip"
           >
-            <img 
+            <Image 
               src={category.thumbnail}
-              className="w-full h-full object-cover object-center absolute"
+              alt="#"
+              className="object-cover object-center"
+              fill
+              sizes="216px"
             />
             <div
               className="absolute inset-0 bg-background/50"
@@ -33,9 +36,11 @@ const CategorySection = async () => {
           href={`/category`}
           className="min-w-54 aspect-video relative flex items-center justify-center rounded-lg overflow-clip"
         >
-          <img 
+          <Image 
+            alt="#"
             src={"https://th.bing.com/th/id/OIP.gBWGbwB7b8_fTnXAGPxUHgHaE8?w=250&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"}
             className="w-full h-full object-cover object-center absolute"
+            fill
           />
           <div
             className="absolute inset-0 bg-background/50"

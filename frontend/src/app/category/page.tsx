@@ -1,7 +1,7 @@
-import Movie from "@/components/movie";
 import { fetchServer } from "@/lib/api";
 import { categoryColor, dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
+import Image from "next/image";
 import Link from "next/link";
 
 const Category = async ({ params }: { params: Promise<{ slug: string }> }) => {
@@ -27,9 +27,11 @@ const Category = async ({ params }: { params: Promise<{ slug: string }> }) => {
             key={category.value}
             className="min-w-54 aspect-video relative flex items-center justify-center rounded-lg overflow-clip"
           >
-            <img
+            <Image
               src={category.thumbnail}
+              alt="#"
               className="w-full h-full object-cover object-center absolute"
+              fill
             />
             <div className="absolute inset-0 bg-background/50" />
             <span className="z-10 font-medium title">

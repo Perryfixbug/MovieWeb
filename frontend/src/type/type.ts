@@ -82,3 +82,11 @@ interface VoteType{
   userId: number,
   user: UserType
 }
+
+interface CarouselType{
+  id: number,
+  movie_id: number,
+  is_active: boolean,
+  createAt: Date,
+  movie: MovieType
+}

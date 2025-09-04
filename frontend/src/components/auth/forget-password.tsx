@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-const ForgetPassword = ({ setType }: { setType: any }) => {
-  const { register, handleSubmit, reset } = useForm();
-  const onsubmit = async (data: string) => {
+interface ForgetPasswordForm{
+  email: string
+}
+
+const ForgetPassword = ({ setType }: { setType: React.Dispatch<React.SetStateAction<"login" | "signup" | "forget-password">> }) => {
+  const { register, handleSubmit } = useForm<ForgetPasswordForm>();
+  const onsubmit = async (data: ForgetPasswordForm) => {
     console.log(data);
   };
   return (
@@ -32,7 +35,7 @@ const ForgetPassword = ({ setType }: { setType: any }) => {
         </div>
       </div>
       {/* Right side */}
-      <form className="p-12 flex flex-col gap-2 relative">
+      <form onSubmit={handleSubmit(onsubmit)} className="p-12 flex flex-col gap-2 relative">
         <span className="text-lg">Quên mật khẩu</span>
         <Input
           placeholder="Nhập email của bạn"

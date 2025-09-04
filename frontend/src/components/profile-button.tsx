@@ -9,17 +9,15 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/context/authContext";
-import { fetchClient } from "@/lib/api";
 import { DropdownMenuGroup } from "@radix-ui/react-dropdown-menu";
 import { Book, Heart, LogOut, User } from "lucide-react";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toAlias } from "@/lib/toCustomCase";
 
 const ProfileButton = () => {
   const router = useRouter()
-  const {logout, isAuth, userInfo} = useAuth()
+  const {logout, userInfo} = useAuth()
   
   return (
     <div className="">

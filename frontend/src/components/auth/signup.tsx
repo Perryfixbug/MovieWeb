@@ -1,8 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/authContext";
-import { fetchServer } from "@/lib/api";
-import { X } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -14,7 +12,7 @@ interface SignupForm {
   fullname: string;
 }
 
-const Signup = ({ setType }: { setType: any }) => {
+const Signup = ({ setType }: { setType: React.Dispatch<React.SetStateAction<"login" | "signup" | "forget-password">> }) => {
   const {signup} = useAuth()
   const { register, handleSubmit} = useForm<SignupForm>();
   const onsubmit = async (data: SignupForm) => {

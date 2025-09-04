@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react'
 
-const HeroClient = ({carousels}: {carousels: any}) => {
+const HeroClient = ({carousels}: {carousels: CarouselType[]}) => {
   const [heroMovie, setHeroMovie] = useState<MovieType>(carousels[0].movie);
 
   return (
@@ -50,7 +50,7 @@ const HeroClient = ({carousels}: {carousels: any}) => {
 
       {/* Carousel */}
       <div className="carousel absolute bottom-20 right-0 flex justify-between px-5 gap-2">
-        {carousels.map((carousel: any) => (
+        {carousels.map((carousel: CarouselType) => (
           <div
             key={carousel.id}
             className="w-30 aspect-video relative"
@@ -65,6 +65,7 @@ const HeroClient = ({carousels}: {carousels: any}) => {
                   "border-2 border-foreground"
               )}
               fill
+              sizes='120px'
             />
           </div>
         ))}

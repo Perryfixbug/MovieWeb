@@ -1,6 +1,6 @@
 "use client";
 import { fetchClient, fetchServer } from "@/lib/api";
-import React, { useContext, createContext, useState, useEffect, useLayoutEffect } from "react";
+import React, { useContext, createContext, useState, useLayoutEffect } from "react";
 
 export const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
