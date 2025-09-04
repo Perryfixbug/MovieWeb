@@ -7,6 +7,7 @@ class VideoBase(SQLModel):
 
 class VideoRead(VideoBase):
   id: int
+  slug: str
 
 class VideoCreate(VideoBase):
   pass

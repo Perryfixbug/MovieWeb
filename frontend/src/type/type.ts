@@ -1,5 +1,6 @@
 interface VideoType{
   id: number,
+  slug: string,
   name: string,
   link: string,
   createDate: Date 

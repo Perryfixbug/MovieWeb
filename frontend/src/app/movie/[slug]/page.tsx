@@ -131,7 +131,7 @@ const MovieDescribe = async ({
             {/* Button */}
             <div className="function-button-section grid grid-cols-8 items-center">
               <Link
-                href={`/watch-movie/${movie_data.slug}`}
+                href={`/watch-movie/${movie_data.slug}?record=${movie_data?.videos[0]?.slug}`}
                 className="flex items-center justify-center gap-2 bg-accent rounded-full col-start-1 w-40 h-10"
               >
                 <PlayIcon fill="var(--foreground)" size={16} />

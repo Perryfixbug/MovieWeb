@@ -25,7 +25,7 @@ const WatchMovie = async ({
   const { slug } = await params;
   const { record } = await searchParams;
   const movie_data = (await fetchServer(`/movie/${slug}`)) as MovieType;
-  const link = movie_data.videos.find((video: VideoType)=>video.name == record)?.link
+  const link = movie_data.videos.find((video: VideoType)=>video.slug == record)?.link
 
   return (
     <div className="page pt-16 px-5 flex flex-col w-full h-full gap-10">

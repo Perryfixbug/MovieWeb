@@ -4,6 +4,7 @@ from dependencies import get_session
 from schemas.video import VideoRead, VideoCreate
 from models.video import Video
 from typing import Dict
+import slugify
 
 router = APIRouter(
   prefix='/video',
@@ -15,7 +16,8 @@ async def create_video_of_movie(
   video_data: VideoCreate,
   session: Session = Depends(get_session)
 )->VideoRead:
-  video = Video(**video_data.model_dump())
+  slug = slugify(video_data.name)
+  video = Video(**video_data.model_dump(), slug=slug)
   session.add(video)
   session.commit()
   session.refresh(video)

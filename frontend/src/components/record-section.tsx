@@ -10,7 +10,7 @@ const RecordSection = ({movie_data}: {movie_data: MovieType}) => {
         {movie_data?.videos?.map((video: VideoType)=>(
           <Link 
             key={video.id}
-            href={`/watch-movie/${movie_data.slug}?record=${video.name}`}
+            href={`/watch-movie/${movie_data.slug}?record=${video.slug}`}
             className='relative flex justify-center items-center aspect-video w-30 rounded-md overflow-clip border'
           >
             <Image 

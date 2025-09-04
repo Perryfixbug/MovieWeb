@@ -5,6 +5,7 @@ from schemas.video import VideoBase
 
 class Video(VideoBase, table=True):
   id: int = Field(primary_key=True)
+  slug: str = Field(index=True, unique=True)
   createAt: datetime = Field(default_factory=datetime.now)
   movie: "Movie" = Relationship(back_populates="videos")
 
