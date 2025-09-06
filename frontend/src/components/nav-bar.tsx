@@ -1,4 +1,5 @@
 import LoginButton from "@/components/login-button";
+import SearchInput from "@/components/search";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -64,14 +65,9 @@ const NavBar = async () => {
           <Link href={"/"} className="font-bold">
             QUẠC PHIM
           </Link>
-          <div className="search-section w-80 flex items-center border-1 px-2 rounded-sm bg-foreground">
-            <MenuIcon size={16} color="var(--color-black)" />
-            <Input
-              placeholder="Tìm kiếm phim, tên diễn viên"
-              className="border-0 focus-visible:border-0 focus-visible:ring-0 bg-secondary text-background placeholder:text-muted"
-            />
-            <SearchIcon size={16} color="var(--color-black)" />
-          </div>
+          {/* Search part */}
+          <SearchInput />
+          {/* Category part */}
           <NavigationMenu className="">
             <NavigationMenuList className="justify-between w-[500px]">
               {/* Thể loại */}

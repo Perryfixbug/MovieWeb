@@ -1,18 +1,18 @@
-interface VideoType{
-  id: number,
-  slug: string,
-  name: string,
-  link: string,
-  createDate: Date 
-  movieId: number 
+interface VideoType {
+  id: number;
+  slug: string;
+  name: string;
+  link: string;
+  createDate: Date;
+  movieId: number;
 }
 
-interface SubType{
-  id: number,
-  name: string,
-  link: string,
-  createDate: Date 
-  movieId: number 
+interface SubType {
+  id: number;
+  name: string;
+  link: string;
+  createDate: Date;
+  movieId: number;
 }
 
 interface MovieType {
@@ -43,6 +43,16 @@ interface MovieType {
   createAt: Date;
 }
 
+interface MovieMinMetadataType {
+  id: number;
+  slug: string;
+  name: string;
+  publishYear: number;
+  poster: string;
+  categories: string[];
+  type: string;
+}
+
 interface CategoryType {
   id: number;
   value: string;
@@ -61,35 +71,35 @@ interface UserType {
   avatar: string;
   role: string;
   level: string;
-  likes: []
-  list: []
+  likes: [];
+  list: [];
   createAt: Date;
 }
 
 interface CommentType {
-  id: number,
-  targetId: number,
-  targetType: string,
-  content: string,
-  spoil: boolean,
-  votes: [VoteType],
-  replies: [any]
-  createAt: Date,
-  user: UserType
+  id: number;
+  targetId: number;
+  targetType: string;
+  content: string;
+  spoil: boolean;
+  votes: [VoteType];
+  replies: [any];
+  createAt: Date;
+  user: UserType;
 }
 
-interface VoteType{
-  id: number, 
-  value: boolean,
-  createAt: Date,
-  userId: number,
-  user: UserType
+interface VoteType {
+  id: number;
+  value: boolean;
+  createAt: Date;
+  userId: number;
+  user: UserType;
 }
 
-interface CarouselType{
-  id: number,
-  movie_id: number,
-  is_active: boolean,
-  createAt: Date,
-  movie: MovieType
+interface CarouselType {
+  id: number;
+  movie_id: number;
+  is_active: boolean;
+  createAt: Date;
+  movie: MovieType;
 }

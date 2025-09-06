@@ -51,3 +51,19 @@ class MovieCreate(MovieBase):
 
 class MovieUpdate(MovieBase):
   pass
+
+class MovieMetadataSearch(SQLModel):
+  id: int
+  name: str
+  slug: str
+  publishYear: int
+  categories: List[str]
+  type: str
+  poster: str
+
+  @field_validator("categories", mode="before")
+  @classmethod
+  def to_list_category(cls, v): 
+    if v and hasattr(v[0], "value"):
+      return [c.value for c in v]
+    return v

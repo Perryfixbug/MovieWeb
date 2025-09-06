@@ -12,7 +12,7 @@ function BackButton({
 }>) {
   const router = useRouter();
   return (
-    <div className={cn(className, "relative flex items-center justify-start gap-2 w-full hover:cursor-pointer z-50")} onClick={() => router.back()}>
+    <div className={cn(className, "relative flex items-center justify-start gap-2 w-fit hover:cursor-pointer z-50")} onClick={() => router.back()}>
       <ChevronLeftIcon size={16} />
       {children}
     </div>
