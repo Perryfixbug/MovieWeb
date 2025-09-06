@@ -1,6 +1,6 @@
 "use client";
 import { fetchClient, fetchServer } from "@/lib/api";
-import React, { useContext, createContext, useState, useLayoutEffect } from "react";
+import React, { useContext, createContext, useState, useLayoutEffect, useEffect } from "react";
 
 export const AuthContext = createContext<any>(null);
 export const useAuth = () => useContext(AuthContext);
@@ -35,13 +35,18 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     setUserInfo(null)
     setIsAuth(false);
   };
-  useLayoutEffect(() => {
+  useEffect(() => {
     async function refresh() {
       try {
         const res = await fetchServer("/auth/refresh");
         if (!res.accessToken) return;
         localStorage.setItem("accessToken", res.accessToken);
-        const user = await fetchClient("/user/me");
+
+        // Song song fetch
+        const [user] = await Promise.all([
+          fetchClient("/user/me")
+        ]);
+
         setUserInfo(user)
         setIsAuth(true);
       } catch (e) {
@@ -52,8 +57,18 @@ const AuthProvider = ({ children }: { children: React.ReactElement }) => {
     }
     refresh();
   }, []);
+
+  const contextValue = React.useMemo(() => ({
+    login,
+    logout,
+    signup,
+    isAuth,
+    userInfo,
+    setUserInfo
+  }), [isAuth, userInfo]);
+
   return (
-    <AuthContext.Provider value={{ login, logout, signup, isAuth, userInfo }}>
+    <AuthContext.Provider value={contextValue}>
       {children}
     </AuthContext.Provider>
   );

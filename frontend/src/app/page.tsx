@@ -3,6 +3,8 @@ import Hero from "@/components/hero";
 import MoviesByCategory from "@/components/movies-by-category";
 import { fetchServer } from "@/lib/api";
 
+export const revalidate = 3600 //1 tiếng
+
 export default async function Home() {
   const list = await fetchServer("/category/movie") as CategoryType[];
 

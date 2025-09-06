@@ -14,6 +14,16 @@ import ReactPlayer from "react-player";
 import BackButton from "@/components/back-button";
 import RecordSection from "@/components/record-section";
 import Image from "next/image";
+import MovieInteractSection from "@/components/movie-interact-section";
+
+export async function generateMetadata({params}: {params: Promise<{slug: string}>}){
+  const {slug} = await params
+  const movie_data = (await fetchServer(`/movie/${slug}`, 'GET', undefined, undefined, 'force-cache')) as MovieType
+  return{
+    title: `Xem ${movie_data.name} - QuacPhim`,
+    description: movie_data.description
+  }
+}
 
 const WatchMovie = async ({
   params,
@@ -24,7 +34,7 @@ const WatchMovie = async ({
 }) => {
   const { slug } = await params;
   const { record } = await searchParams;
-  const movie_data = (await fetchServer(`/movie/${slug}`)) as MovieType;
+  const movie_data = (await fetchServer(`/movie/${slug}`, 'GET', undefined, undefined, 'force-cache')) as MovieType;
   const link = movie_data.videos.find((video: VideoType)=>video.slug == record)?.link
 
   return (
@@ -93,12 +103,10 @@ const WatchMovie = async ({
         </div>
         {/* Right side */}
         <div className="right col-span-4 grid grid-cols-4 gap-5 grid-rows-[20px_100px_1fr]">
-          <ul className="flex justify-start h-5 gap-5 items-center col-start-1 col-span-2">
-            <li><ThumbsUpIcon className="icon" /></li>
-            <li><MessageSquareTextIcon className="icon" /></li>
-            <li><BookMarkedIcon className="icon" /></li>
-            <li><ShareIcon className="icon" /></li>
-          </ul>
+          <div className="col-start-1 col-span-2">
+            <MovieInteractSection movie_data={movie_data}/>
+          </div>
+
           <div className="col-span-4">
             <p className="flex gap-1 text-muted">
               {" "}

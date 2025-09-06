@@ -119,31 +119,49 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  body {
+    overflow-y: auto;
+    scrollbar-gutter: stable overlay; /* scrollbar đè lên nội dung, không chiếm chỗ */
+  }
+
+  /* Thêm style đẹp cho scrollbar (webkit-based) */
+  body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  body::-webkit-scrollbar-thumb {
+    background: var(--muted);
+    border-radius: 4px;
+  }
+
+  body::-webkit-scrollbar-track {
+    background: transparent;
+  } 
 }
 
-body {
-  overflow-y: auto;
-  scrollbar-gutter: stable overlay; /* scrollbar đè lên nội dung, không chiếm chỗ */
-}
+@layer utilities{
+  .icon{
+    @apply w-5 h-5
+  }
 
-/* Thêm style đẹp cho scrollbar (webkit-based) */
-body::-webkit-scrollbar {
-  width: 8px;
-}
+  .title{
+    @apply text-xl
+  }
 
-body::-webkit-scrollbar-thumb {
-  background: var(--muted);
-  border-radius: 4px;
-}
+  @keyframes fly-up {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    100% {
+      opacity: 0.3;
+      transform: translateY(-20px);
+    }
+  }
 
-body::-webkit-scrollbar-track {
-  background: transparent;
-} 
-
-.icon{
-  @apply w-5 h-5
-}
-
-.title{
-  @apply text-xl
+  .animate-fly-up {
+    animation: fly-up 1s ease-out forwards;
+  }
 }

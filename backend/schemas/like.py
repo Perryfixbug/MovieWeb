@@ -1,10 +1,10 @@
 from sqlmodel import SQLModel, Field
-from datetime import datetime
-from enum import Enum
+from typing import Optional
+from schemas.movie import MovieMetadataSearch
 
 class LikeBase(SQLModel):
   movieId: int = Field(foreign_key="movie.id")
   userId: int = Field(foreign_key="user.id")
 
 class LikeRead(LikeBase):
-  pass
+  movie: Optional["MovieMetadataSearch"] = None

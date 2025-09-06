@@ -8,7 +8,6 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -31,7 +30,7 @@ const NavBar = async () => {
   return (
     <>
       {/* Giao diện mobile */}
-      <div className="mobile lg:hidden flex justify-between items-center fixed w-full px-5 py-2 z-50">
+      <div className="mobile sm:hidden flex justify-between items-center fixed w-full px-5 py-2 z-50">
         <div className="main-section flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger>
@@ -56,7 +55,7 @@ const NavBar = async () => {
       </div>
 
       {/* Giao diện desktop */}
-      <div className="desktop hidden lg:flex justify-between items-center fixed w-full px-5 py-2 z-20">
+      <div className="desktop hidden sm:flex justify-between items-center fixed w-full px-5 py-2 z-20">
         <div className="main-section flex items-center gap-5">
           <Avatar className="p-2">
             <AvatarImage src="/vercel.svg" alt="logo" />

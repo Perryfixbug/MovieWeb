@@ -7,6 +7,7 @@ import { fetchServer } from "@/lib/api";
 import { dict } from "@/lib/dictionnary";
 import { toTitleCase } from "@/lib/toCustomCase";
 import {
+  Bookmark,
   BookMarkedIcon,
   MessageSquareTextIcon,
   PlayIcon,
@@ -16,6 +17,16 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import BackButton from "@/components/back-button";
+import MovieInteractSection from "@/components/movie-interact-section";
+
+export async function generateMetadata({params}: {params: Promise<{slug: string}>}){
+  const {slug} = await params
+  const movie_data = (await fetchServer(`/movie/${slug}`, 'GET', undefined, undefined, 'force-cache')) as MovieType
+  return{
+    title: `${movie_data.name} - QuacPhim`,
+    description: movie_data.description
+  }
+}
 
 const MovieDescribe = async ({
   params,
@@ -23,7 +34,7 @@ const MovieDescribe = async ({
   params: Promise<{ slug: string }>;
 }) => {
   const { slug } = await params;
-  const movie_data = (await fetchServer(`/movie/${slug}`)) as MovieType;
+  const movie_data = (await fetchServer(`/movie/${slug}`, 'GET', undefined, undefined, 'force-cache')) as MovieType;
 
   return (
     <div className="relative h-full w-full overflow-clip">
@@ -54,7 +65,7 @@ const MovieDescribe = async ({
                   alt={movie_data.name}
                   width={300}
                   height={500}
-                  className="object-contain object-top-left"
+                  className="object-contain object-top-left min-w-15"
                 />
               </div>
               <div className="col-span-3 flex flex-col justify-between">
@@ -137,20 +148,9 @@ const MovieDescribe = async ({
                 <PlayIcon fill="var(--foreground)" size={16} />
                 <span className="font-medium text-lg">Xem ngay</span>
               </Link>
-              <ul className="flex justify-around col-start-3 col-span-2">
-                <li>
-                  <ThumbsUpIcon className="icon" />
-                </li>
-                <li>
-                  <MessageSquareTextIcon className="icon" />
-                </li>
-                <li>
-                  <BookMarkedIcon className="icon" />
-                </li>
-                <li>
-                  <ShareIcon className="icon" />
-                </li>
-              </ul>
+              <div className="col-start-3 col-span-2">
+                <MovieInteractSection movie_data={movie_data}/>
+              </div>
               <div className="fact col-start-6 col-span-3 text-muted">
                 <span className="font-bold text-foreground">Fact: </span>
                 {movie_data.fact}

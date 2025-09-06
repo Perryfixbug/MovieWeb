@@ -20,7 +20,7 @@ const Type = async ({params}:{params: Promise<{slug: string}>}) => {
   return (
     <div className='flex flex-col gap-10 pt-20 px-5 w-full h-screen' style={{background: `linear-gradient(to bottom, ${color} 0%, rgba(44, 44, 44, 1) 30%)`}}>
       <span className='font-bold text-5xl' >{toTitleCase(dict[slug] ?? slug)}</span>
-      <div className='flex gap-5'>{movies.map((movie: MovieType)=>(
+      <div className='flex gap-5 flex-wrap'>{movies.map((movie: MovieType)=>(
         <Movie key={movie.id} movie_data={movie} />
       ))}</div>
     </div>

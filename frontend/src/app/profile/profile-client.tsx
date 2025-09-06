@@ -14,7 +14,6 @@ const ProfileClient = () => {
   const { userInfo } = useAuth()
   const searchParams = useSearchParams()
   const router = useRouter()
-
   const [currentTab, setCurrentTab] = useState("like")
 
   //Xử lý sự kiện chuyển tab
@@ -24,7 +23,7 @@ const ProfileClient = () => {
     newParams.set("tab", value)
     router.push(`/profile/?tab=${value}`)
   }
-
+  
   //Đồng bộ searchParams với currentTab
   useEffect(()=>{
     const tab = searchParams.get("tab");
@@ -36,11 +35,11 @@ const ProfileClient = () => {
       <Tabs
         defaultValue={"like"}
         orientation="horizontal"
-        className="flex flex-row gap-5"
+        className="grid grid-cols-12 gap-5"
         value={currentTab}
         onValueChange={handleTabChange}
       >
-        <TabsList className="h-[80vh] w-50 bg-muted/20 rounded-2xl flex flex-col justify-start items-start p-5 gap-5">
+        <TabsList className="h-[80vh] bg-muted/20 rounded-2xl flex flex-col justify-start items-start p-5 gap-5 col-span-2">
           <span className="text-lg">Quản lý tài khoản</span>
           <div className="flex flex-col w-full items-start gap-2">
             <TabsTrigger
@@ -70,28 +69,28 @@ const ProfileClient = () => {
             </Button>
           </div>
         </TabsList>
-        <TabsContent value="like" className="flex flex-col">
-          <span>Yêu thích</span>
-          <div className="flex gap-5">
-            {userInfo?.likes ? userInfo?.likes?.map((movie: MovieType)=>(
-              <Movie key={movie.id} movie_data={movie}/>
+        <TabsContent value="like" className="flex flex-col gap-2 col-span-10">
+          <span className="text-lg">Yêu thích</span>
+          <div className="flex gap-5 flex-wrap">
+            {userInfo?.likes ? userInfo?.likes?.map((like: LikeType)=>(
+              <Movie key={like?.movie?.id} movie_data={like?.movie}/>
             )): 
               <span className="text-muted/70">Hãy chọn một phim bạn thích để đưa vào danh sách này</span>
             }
           </div>
         </TabsContent>
-        <TabsContent value="list">
-          <span>Danh sách</span>
-          <div className="flex gap-5">
-            {userInfo?.likes ? userInfo?.likes?.map((movie: MovieType)=>(
+        <TabsContent value="list" className="flex flex-col gap-2 flex-wrap col-span-10">
+          <span className="text-lg">Danh sách</span>
+          <div className="flex gap-5 flex-wrap">
+            {userInfo?.list ? userInfo?.list?.map((movie: MovieType)=>(
               <Movie key={movie.id} movie_data={movie}/>
             )): 
               <span className="text-muted/70">Hãy chọn một phim bạn thích để đưa vào danh sách xem sau</span>
             }
           </div>
         </TabsContent>
-        <TabsContent value="account">
-          <span>Tài khoản</span>
+        <TabsContent value="account" className="flex flex-col gap-2 flex-wrap col-span-10">
+          <span className="text-lg">Tài khoản</span>
           <div className="grid grid-cols-8">
             <div className="info flex flex-col gap-5 col-span-4">
               <ul className="mt-2 w-full">

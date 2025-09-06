@@ -31,7 +31,7 @@ interface MovieType {
   label: string;
   fact: string;
   type: string;
-  categories: [string];
+  categories: string[];
   status: string;
   actor: string;
   trailer: string;
@@ -41,6 +41,7 @@ interface MovieType {
   poster: string;
   userId: number;
   createAt: Date;
+  likes: any[]
 }
 
 interface MovieMinMetadataType {
@@ -71,10 +72,18 @@ interface UserType {
   avatar: string;
   role: string;
   level: string;
-  likes: [];
-  list: [];
+  likes: LikeType[];
+  list: MovieMinMetadataType[];
   createAt: Date;
 }
+
+interface LikeType{
+  id: number,
+  movieId: number, 
+  userId: number
+  movie: MovieType
+}
+
 
 interface CommentType {
   id: number;

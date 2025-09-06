@@ -13,9 +13,9 @@ class User(UserBase, table=True):
   createAt: datetime = Field(default_factory=datetime.now)
   uploaded_movies: List["Movie"] = Relationship(back_populates="uploader")
   comments: List["Comment"] = Relationship(back_populates="user")
-  likes: List["Like"] = Relationship(back_populates="user")
+  likes: List["Like"] = Relationship()
   payments: List["Payment"] = Relationship(back_populates="user")
-  listMovies: List["Movie"] = Relationship(back_populates="userList", link_model=UserListMovie)
+  listMovies: List["Movie"] = Relationship(link_model=UserListMovie)
 
 from models.movie import Movie
 from models.comment import Comment

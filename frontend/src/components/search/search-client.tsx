@@ -61,6 +61,7 @@ const SearchClient = ({movieMetadatas}: {movieMetadatas: MovieMinMetadataType[]}
           className="border-0 focus-visible:border-0 focus-visible:ring-0 bg-secondary text-background placeholder:text-muted"
           onChange={onSearch}
           onBlur={() => setTimeout(() => setIsOpen(false), 150)}
+          autoComplete='on'
         />
         <SearchIcon size={16} color="var(--color-black)" />
       </div>

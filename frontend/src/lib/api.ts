@@ -1,63 +1,75 @@
-const URL = process.env.NEXT_PUBLIC_SERVER_URL
+const URL = process.env.NEXT_PUBLIC_SERVER_URL;
 
-export async function fetchServer(endpoint: string, method='GET', body?: any, header?: any ){
-  try{
+export async function fetchServer(
+  endpoint: string,
+  method = "GET",
+  body?: any,
+  header?: any,
+  cacheOption?: 'default' | 'force-cache' | 'no-store'
+) {
+  try {
     const res = await fetch(`${URL}${endpoint}`, {
       method,
       credentials: "include",
       headers: {
-        'Content-Type': 'application/json',
-        ...header
+        "Content-Type": "application/json",
+        ...header,
       },
-      body: body && method !== 'GET' ?  JSON.stringify(body) : undefined
-    })
-    return await res.json()
-  }catch(err: any){
-    throw err
+      body: body && method !== "GET" ? JSON.stringify(body) : undefined,
+      cache: cacheOption || 'default',
+    });
+    return await res.json();
+  } catch (err: any) {
+    throw err;
   }
 }
 
-export async function fetchClient(endpoint: string, method='GET', body?: any, header?: any ) {
-  const accessToken = localStorage.getItem("accessToken")
-  if(!accessToken){
-    return "Hãy đăng nhập để dùng chức năng này"
+export async function fetchClient(
+  endpoint: string,
+  method = "GET",
+  body?: any,
+  header?: any
+) {
+  const accessToken = localStorage.getItem("accessToken");
+  if (!accessToken) {
+    return "Hãy đăng nhập để dùng chức năng này";
   }
 
-  try{
+  try {
     const res = await fetch(`${URL}${endpoint}`, {
       method,
       credentials: "include",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
-        ...header
+        ...header,
       },
-      body: body && method !== 'GET' ?  JSON.stringify(body) : undefined
-    })
+      body: body && method !== "GET" ? JSON.stringify(body) : undefined,
+    });
 
     //token hết hạn -> refresh
-    if(res.status == 401 && endpoint!='/auth/refresh'){
+    if (res.status == 401 && endpoint != "/auth/refresh") {
       const refreshRes = await fetch(`${URL}/auth/refresh`, {
         method: "POST",
         credentials: "include",
         headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if(!refreshRes.ok){
-        throw new Error("Phiên làm việc đã hết hạn, vui lòng đăng nhập lại")
+          "Content-Type": "application/json",
+        },
+      });
+      if (!refreshRes.ok) {
+        throw new Error("Phiên làm việc đã hết hạn, vui lòng đăng nhập lại");
       }
-      const {accessToken: accessToken} = await refreshRes.json()
-      localStorage.setItem("accessToken", accessToken)
-      return fetchClient(endpoint, method, body, header)
-    }
-    
-    if(!res.ok){
-      throw new Error("Lỗi")
+      const { accessToken: accessToken } = await refreshRes.json();
+      localStorage.setItem("accessToken", accessToken);
+      return fetchClient(endpoint, method, body, header);
     }
 
-    return await res.json()
-  }catch(err: any){
-    throw err
+    if (!res.ok) {
+      throw new Error("Lỗi");
+    }
+
+    return await res.json();
+  } catch (err: any) {
+    throw err;
   }
 }

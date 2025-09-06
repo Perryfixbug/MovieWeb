@@ -54,6 +54,7 @@ const WriteCommentSection = ({ movieId }: { movieId: number }) => {
         className="bg-[#3D3B3B] p-4 rounded-md flex flex-col gap-2"
       >
         <Textarea
+          id="write-comment-input"
           placeholder="Viết bình luận"
           className="bg-[#1E1E1E] h-32"
           {...register("content", { required: true })}
