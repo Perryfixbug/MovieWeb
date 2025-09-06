@@ -61,6 +61,8 @@ interface UserType {
   avatar: string;
   role: string;
   level: string;
+  likes: []
+  list: []
   createAt: Date;
 }
 

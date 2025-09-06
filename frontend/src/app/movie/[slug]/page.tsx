@@ -26,7 +26,7 @@ const MovieDescribe = async ({
   const movie_data = (await fetchServer(`/movie/${slug}`)) as MovieType;
 
   return (
-    <div className="relative h-full w-full  overflow-clip">
+    <div className="relative h-full w-full overflow-clip">
       <Image
         src={movie_data.thumbnail}
         alt={movie_data.name}
@@ -42,7 +42,7 @@ const MovieDescribe = async ({
         }}
       />
       {/* main */}
-      <div className="px-5 pt-16">
+      <div className="px-5 pt-16 min-h-screen">
         <BackButton className="z-20 mb-5">Quay lại</BackButton>
         <div className="grid grid-cols-12 gap-5 ">
           {/* Left side */}

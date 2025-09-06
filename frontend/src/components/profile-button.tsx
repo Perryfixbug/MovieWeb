@@ -29,19 +29,22 @@ const ProfileButton = () => {
           </Avatar>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40 rounded-sm bg-background border-0" align="end">
-          <DropdownMenuLabel>{userInfo?.fullname}</DropdownMenuLabel>
+          <DropdownMenuLabel className="flex justify-between">
+            <span>{userInfo?.fullname}</span>
+            <span className="text-muted">Cấp: {userInfo.level}</span>
+          </DropdownMenuLabel>
           <DropdownMenuSeparator className="bg-muted/20"/>
           <DropdownMenuGroup>
             {/* Yêu thích */}
             <DropdownMenuItem>
-              <Link href={'/profile'} className="flex justify-start items-center gap-2">
+              <Link href={'/profile?tab=like'} className="flex justify-start items-center gap-2">
                 <Heart />
                 Yêu thích
               </Link>
             </DropdownMenuItem>
             {/* Danh sách */}
             <DropdownMenuItem>
-              <Link href={'/profile'} className="flex justify-start items-center gap-2">
+              <Link href={'/profile?tab=list'} className="flex justify-start items-center gap-2">
                 <Book />
                 Danh sách
               </Link>
@@ -49,7 +52,7 @@ const ProfileButton = () => {
             <DropdownMenuSeparator className="bg-muted/20" />
             {/* Tài khoản */}
             <DropdownMenuItem>
-              <Link href={'/profile'} className="flex justify-start items-center gap-2">
+              <Link href={'/profile?tab=account'} className="flex justify-start items-center gap-2">
                 <User />
                 Tài khoản
               </Link>

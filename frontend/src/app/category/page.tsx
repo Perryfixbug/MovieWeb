@@ -28,7 +28,7 @@ const Category = async ({ params }: { params: Promise<{ slug: string }> }) => {
             className="min-w-54 aspect-video relative flex items-center justify-center rounded-lg overflow-clip"
           >
             <Image
-              src={category.thumbnail}
+              src={category?.thumbnail ?? '/images/mov list.webp'}
               alt="#"
               className="w-full h-full object-cover object-center absolute"
               fill
