@@ -6,7 +6,6 @@ class Vote(VoteBase, table=True):
   id: int = Field(primary_key=True)
   createAt: datetime = Field(default_factory=datetime.now)
   user: "User" = Relationship()
-  comment: "Comment" = Relationship(back_populates="votes")
 
 from models.user import User
-from models.comment import Comment
+

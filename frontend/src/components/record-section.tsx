@@ -25,7 +25,7 @@ const RecordSection = ({ movie_data }: { movie_data: MovieType }) => {
             </Link>
           ))
         ) : (
-          <p className="text-muted/70">
+          <p className="text-muted">
             Đợi nhé, bản chiếu mới nhất sắp được cập nhật rồi
           </p>
         )}

@@ -7,7 +7,7 @@ class Comment(CommentBase, table=True):
   id: int = Field(primary_key=True)
   createAt: datetime = Field(default_factory=datetime.now)
   user: "User" = Relationship(back_populates="comments")
-  votes: List["Vote"] = Relationship()
+  votes: List["Vote"] = Relationship(sa_relationship_kwargs={"cascade": "all, delete-orphan"})
 
 from models.user import User
 from models.vote import Vote

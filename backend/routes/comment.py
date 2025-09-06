@@ -95,10 +95,22 @@ async def update_comment(
 
 @router.delete('/{commentId}')
 async def delete_comment(
-  commnetId: int, 
+  commentId: int, 
   session: Session = Depends(get_session),
 ):
-  comment = session.get(Comment, commnetId)
+  # Xóa replies trước
+  replies = session.exec(
+    select(Comment).where(
+      Comment.targetType == "comment",
+      Comment.targetId == commentId
+    )
+  ).all()
+  
+  for r in replies:
+    session.delete(r)
+  
+  # Xóa comment gốc
+  comment = session.get(Comment, commentId)
   session.delete(comment)
   session.commit()
   return "Xóa thành công comment"

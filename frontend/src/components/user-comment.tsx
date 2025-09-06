@@ -4,6 +4,7 @@ import InteractionCommentSection from "@/components/interact-comment-section";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { fetchServer } from "@/lib/api";
 import { toAlias } from "@/lib/toCustomCase";
+import UserCommentMenu from "@/components/user-comment-menu";
 
 const CommentComponent = async ({ comment_data }: { comment_data: CommentType }) => {
   return (
@@ -15,9 +16,10 @@ const CommentComponent = async ({ comment_data }: { comment_data: CommentType })
       <div className="flex flex-col gap-1">
         {/* Khối comment text, gói theo nội dung */}
         <div className="bg-background rounded-xl px-5 py-1 w-fit">
-          <span className="font-medium text-sm">
-            {comment_data.user.fullname}
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-sm">{comment_data.user.fullname}</span>
+            <UserCommentMenu comment_data={comment_data}/>
+          </div>
           <p className="text-muted break-words">{comment_data.content}</p>
         </div>
         <InteractionCommentSection comment_data={comment_data} rootId={null}/>
@@ -32,9 +34,11 @@ const CommentComponent = async ({ comment_data }: { comment_data: CommentType })
               <div className="flex flex-col gap-1">
                 {/* Khối comment text, gói theo nội dung */}
                 <div className="bg-background rounded-xl px-5 py-1 w-fit">
-                  <span className="font-medium text-sm">
-                    {comment.user.fullname}
-                  </span>
+                  <div className="flex items-center gap-2">
+                  <span className="font-medium text-sm">{comment_data.user.fullname}</span>
+                  {/* Dropdown menu */}
+                  <UserCommentMenu comment_data={comment}/>
+                </div>
                   <p className="text-muted break-words">{comment.content}</p>
                 </div>
                 <InteractionCommentSection comment_data={comment} rootId={comment_data.id}/>
