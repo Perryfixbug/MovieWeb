@@ -5,22 +5,21 @@ import Fuse from 'fuse.js'
 import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 
+// 1. Cấu hình Fuse
+const options = {
+  keys: [
+    { name: "name", weight: 0.7 },
+    { name: "categories", weight: 0.2 },
+    { name: "actors", weight: 0.2 },     
+    { name: "director", weight: 0.1 },
+  ],
+  threshold: 0.3,          // nới lỏng hơn (0.0 = match chính xác, 1.0 = cực fuzzy)
+  ignoreLocation: false,    // bỏ qua vị trí trong chuỗi
+  minMatchCharLength: 1,   // cho phép match từ 1 ký tự
+  includeScore: true,
+};
 
 const SearchClient = ({movieMetadatas}: {movieMetadatas: MovieMinMetadataType[]}) => {
-   // 1. Cấu hình Fuse
-  const options = {
-    keys: [
-      { name: "name", weight: 0.7 },
-      { name: "categories", weight: 0.2 },
-      { name: "actors", weight: 0.2 },     
-      { name: "director", weight: 0.1 },
-    ],
-    threshold: 0.3,          // nới lỏng hơn (0.0 = match chính xác, 1.0 = cực fuzzy)
-    ignoreLocation: false,    // bỏ qua vị trí trong chuỗi
-    minMatchCharLength: 1,   // cho phép match từ 1 ký tự
-    includeScore: true,
-  };
-
   // 2. Khởi tạo index + Fuse instance chỉ khi dữ liệu đổi
   const index = useMemo(
     () => Fuse.createIndex(options.keys!, movieMetadatas),
